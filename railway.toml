@@ -1,0 +1,13 @@
+# Configuración de Railway
+# Este archivo le dice a Railway cómo ejecutar tu bot
+
+[build]
+builder = "heroku.buildpacks"
+
+[build.buildpacks]
+list = [
+  "heroku/python"
+]
+
+[env]
+PYTHONUNBUFFERED = "1"

@@ -48,11 +48,7 @@ worker: python main.py
 4. Sube tu código
 
 #### 5. Configurar variables de entorno
-En Railway Dashboard:
-```
-TELEGRAM_TOKEN=8065924513:AAHcI033x83E9r2fztwWJ-EFMdgUWj4ARJI
-GOOGLE_API_KEY=AIzaSyCMXs2CGhTgnFB6bHMxB3aDWXCH_dnDn7Y
-LOG_LEVEL=INFO
+En 
 ```
 
 #### 6. Deploy

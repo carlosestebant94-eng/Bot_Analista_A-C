@@ -5,8 +5,8 @@
 - [ ] Tengo cuenta Railway (https://railway.app/)
 - [ ] Tengo el archivo ZIP: Bot_Analista_Railway.zip (20.5 MB)
 - [ ] Tengo mis credenciales a mano:
-  - [ ] TELEGRAM_TOKEN = 8065924513:AAHcI033x83E9r2fztwWJ-EFMdgUWj4ARJI
-  - [ ] GOOGLE_API_KEY = AIzaSyCMXs2CGhTgnFB6bHMxB3aDWXCH_dnDn7Y
+  - [ ] FMdgUWj4ARJI
+  - [ ] B6bHMxB3aDWXCH_dnDn7Y
 
 ## Durante el deployment
 

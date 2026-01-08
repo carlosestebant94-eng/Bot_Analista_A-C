@@ -1,4 +1,18 @@
+# Archivos de entorno sensibles (NUNCA SUBIR)
 .env
+.env.local
+.env.*.local
+
+# Virtual environments
+.venv
+venv/
+venv_bot/
+ENV/
+env/
+.venv/
+*.egg-info/
+
+# Python cache
 __pycache__/
 *.py[cod]
 *$py.class
@@ -16,17 +30,51 @@ parts/
 sdist/
 var/
 wheels/
-*.egg-info/
-.installed.cfg
 *.egg
 .pytest_cache/
-.venv
-venv/
-ENV/
-env/
+
+# IDEs
 .idea/
 .vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs y datos
+logs/
+logging_audit/
 *.log
 *.db
-logs/
 data/
+pdfs/*.pdf
+cache/
+
+# Testing
+.tox/
+.coverage
+htmlcov/
+
+# Dependencias
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Documentación compilada
+site/
+build/
+dist/
+
+# Directorios temporales
+tmp/
+temp/
+
+# Sistema operativo
+Thumbs.db
+.DS_Store
+*.exe (excepto venv_bot necesarios)
+
+# IDX (Google)
+.idx/
+
+# Reportes
+reports/

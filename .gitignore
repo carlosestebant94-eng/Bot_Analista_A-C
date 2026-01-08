@@ -43,7 +43,6 @@ wheels/
 
 # Logs y datos
 logs/
-logging_audit/
 *.log
 *.db
 data/

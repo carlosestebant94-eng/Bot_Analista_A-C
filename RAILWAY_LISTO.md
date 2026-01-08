@@ -59,11 +59,11 @@ Una vez terminado el deploy:
 
    VARIABLE 1:
    Nombre: TELEGRAM_TOKEN
-   Valor: 8065924513:AAHcI033x83E9r2fztwWJ-EFMdgUWj4ARJI
+   j4ARJI
 
    VARIABLE 2:
    Nombre: GOOGLE_API_KEY
-   Valor: AIzaSyCMXs2CGhTgnFB6bHMxB3aDWXCH_dnDn7Y
+   Valor: 
 
    VARIABLE 3:
    Nombre: LOG_LEVEL

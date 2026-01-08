@@ -95,7 +95,7 @@ Railway hace todo automáticamente:
 3. Envía: /newbot
 4. Sigue instrucciones
 5. Copia el TOKEN generado
-   Ejemplo: 8180362199:AAFDWjpNRK8_Zh8JdNHVYimipq9nVxmcd1E
+   Ejemplo: mcd1E
 ```
 
 ### GOOGLE_API_KEY
@@ -103,7 +103,7 @@ Railway hace todo automáticamente:
 1. Ve a: https://aistudio.google.com/apikey
 2. Click: "Create API Key"
 3. Copia la clave generada
-   Ejemplo: AIzaSyDrZn9goK6CLrMW7_Aic4sLIFGkyM5FH0g
+   Ejemplo: 
 ```
 
 ---

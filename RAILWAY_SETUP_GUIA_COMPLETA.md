@@ -64,8 +64,7 @@ GOOGLE_API_KEY = <tu_api_key_aqui>
 3. Envía: `/newbot`
 4. Sigue las instrucciones
 5. Copia el token que genera (se parece a esto):
-   ```
-   8180362199:AAFDWjpNRK8_Zh8JdNHVYimipq9nVxmcd1E
+   d1E
    ```
 
 #### GOOGLE_API_KEY

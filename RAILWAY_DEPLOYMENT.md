@@ -62,8 +62,7 @@ En el dashboard de Railway:
 3. Agrega estas variables:
 
 ```
-TELEGRAM_TOKEN=8065924513:AAHcI033x83E9r2fztwWJ-EFMdgUWj4ARJI
-GOOGLE_API_KEY=AIzaSyCMXs2CGhTgnFB6bHMxB3aDWXCH_dnDn7Y
+
 LOG_LEVEL=INFO
 ```
 

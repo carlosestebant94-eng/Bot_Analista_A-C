@@ -32,8 +32,8 @@ En Railway dashboard:
 5. Click en el servicio
 6. Tab: "Variables"
 7. Agrega:
-   - TELEGRAM_TOKEN = 8065924513:AAHcI033x83E9r2fztwWJ-EFMdgUWj4ARJI
-   - GOOGLE_API_KEY = AIzaSyCMXs2CGhTgnFB6bHMxB3aDWXCH_dnDn7Y
+   - TELEGRAM_TOKEN 4ARJI
+   - GOOGLE_API_KEY = 
    - LOG_LEVEL = INFO
 8. Espera a que redeploy automáticamente
 9. ¡Listo! Bot 24/7 ✅

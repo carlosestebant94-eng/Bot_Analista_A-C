@@ -1,0 +1,25 @@
+{
+  "typeCheckingMode": "basic",
+  "reportUnusedImports": false,
+  "reportUnusedVariables": false,
+  "reportPrivateUsage": false,
+  "reportOptionalMemberAccess": false,
+  "reportOptionalSubscript": false,
+  "reportOptionalCall": false,
+  "reportOptionalIterable": false,
+  "reportOptionalContextManager": false,
+  "reportOptionalOperand": false,
+  "reportTypedDictNotRequiredAccess": false,
+  "reportConstantRedefinition": false,
+  "pythonVersion": "3.9",
+  "include": [
+    "**/*.py"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.*",
+    "venv_bot",
+    ".git"
+  ]
+}

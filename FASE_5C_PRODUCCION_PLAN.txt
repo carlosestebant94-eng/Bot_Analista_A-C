@@ -1,0 +1,484 @@
+================================================================================
+                    FASE 5C: PRODUCCIÓN - PLAN DETALLADO
+================================================================================
+
+PROYECTO: Bot Analyst v2.1
+FASE: 5C - Deployment a Producción (Railway)
+FECHA: 7 Enero 2026
+DURACIÓN ESTIMADA: 1-2 horas
+PÚBLICO: Hispano
+
+================================================================================
+                        OBJETIVO DE FASE 5C
+================================================================================
+
+Llevar el Bot Analyst a producción en Railway con:
+  ✓ Deployment automático desde GitHub
+  ✓ Monitoreo y logs en tiempo real
+  ✓ Variables de entorno seguras
+  ✓ Base de datos PostgreSQL (opcional)
+  ✓ Dominio personalizado (opcional)
+  ✓ Certificados SSL automáticos
+
+================================================================================
+                      REQUISITOS PREVIOS
+================================================================================
+
+ANTES DE EMPEZAR, NECESITAS:
+  1. Cuenta en GitHub (para guardar código)
+  2. Cuenta en Railway.app (gratuita)
+  3. Token de bot de Telegram
+  4. Google API Key (para Gemini)
+  5. API Keys de datos externos (FRED, etc)
+
+RECOMENDADO:
+  - Dominio personalizado (ej: bot.tudominio.com)
+  - Email para notificaciones
+
+================================================================================
+                      PASO A PASO - DEPLOYMENT
+================================================================================
+
+PASO 1: PREPARAR REPOSITORIO GITHUB
+────────────────────────────────────────────────────────────────────────────
+
+Si aún no lo hiciste:
+
+1.1 Crear repositorio en GitHub
+   Ir a: github.com/new
+   Nombre: bot-analyst-ac
+   Descripción: Bot de análisis financiero con IA
+   Público o Privado: (tu preferencia)
+
+1.2 Clonar repo localmente
+   git clone https://github.com/tu-usuario/bot-analyst-ac.git
+   cd bot-analyst-ac
+
+1.3 Copiar archivos del proyecto
+   cp -r /ruta/del/proyecto/* .
+
+1.4 Crear .gitignore
+   (crear archivo .gitignore)
+
+1.5 Commitear cambios
+   git add .
+   git commit -m "Initial commit: Phase 5C ready for production"
+   git push origin main
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 2: CREAR RAILWAY.APP PROJECT
+────────────────────────────────────────────────────────────────────────────
+
+2.1 Ir a railway.app
+   https://railway.app
+
+2.2 Hacer login con GitHub
+   Clic en "Login with GitHub"
+   Autorizar a Railway
+
+2.3 Crear nuevo proyecto
+   Clic en "New Project"
+   Seleccionar "Deploy from GitHub repo"
+
+2.4 Conectar repositorio
+   Seleccionar repositorio: bot-analyst-ac
+   Autorizar acceso a GitHub
+
+2.5 Railway crea el proyecto
+   Esperar a que inicie el deploy
+   (Primera vez tarda 2-5 minutos)
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 3: CONFIGURAR VARIABLES DE ENTORNO
+────────────────────────────────────────────────────────────────────────────
+
+EN RAILWAY CONSOLE:
+
+3.1 Ir a Variables
+   En el panel de Railway → Variables
+   Clic en "Add Variable"
+
+3.2 Agregar todas las variables necesarias:
+
+   TELEGRAM_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   GOOGLE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   FRED_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   POLYGON_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   ALPHA_VANTAGE_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+   
+   DATABASE_URL=postgresql://...  (si usas PostgreSQL)
+   LOG_LEVEL=INFO
+   ENVIRONMENT=production
+
+3.3 Guardar variables
+   Clic en "Save"
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 4: CREAR PROCFILE
+────────────────────────────────────────────────────────────────────────────
+
+EN TU REPOSITORIO LOCAL:
+
+Crear archivo: Procfile
+
+Contenido:
+─────────────────────────────────────────────────────────────────────────────
+worker: python main.py
+─────────────────────────────────────────────────────────────────────────────
+
+Explicación: Le dice a Railway que ejecute python main.py como worker
+
+Commitear:
+  git add Procfile
+  git commit -m "Add Procfile for Railway"
+  git push origin main
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 5: CREAR REQUIREMENTS.TXT
+────────────────────────────────────────────────────────────────────────────
+
+EN TU REPOSITORIO:
+
+Crear archivo: requirements.txt
+
+Ejecutar localmente:
+  pip freeze > requirements.txt
+
+Revisar que incluya:
+  python-telegram-bot
+  google-generativeai
+  yfinance
+  fred
+  pandas
+  etc.
+
+Commitear:
+  git add requirements.txt
+  git commit -m "Add requirements.txt"
+  git push origin main
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 6: CONFIGURAR RAILWAY PARA PYTHON
+────────────────────────────────────────────────────────────────────────────
+
+EN RAILWAY:
+
+6.1 Ir a Settings
+   Panel del proyecto → Settings
+
+6.2 Buscar "Environment"
+   Seleccionar "Python"
+
+6.3 Python version
+   Establecer: 3.12 (o tu versión)
+
+6.4 Install command
+   pip install -r requirements.txt
+
+6.5 Build command
+   (dejar vacío - no es necesario)
+
+6.6 Start command
+   python main.py
+
+6.7 Guardar
+   Clic en "Save"
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 7: INICIAR DEPLOYMENT
+────────────────────────────────────────────────────────────────────────────
+
+7.1 Ir a Deployments
+   Panel → Deployments
+
+7.2 Hacer manual deploy
+   Clic en "Deploy" o "Redeploy"
+
+7.3 Ver logs en vivo
+   Clic en "View Logs"
+   Esperar a que termine:
+   
+   Expected output:
+   ────────────────────────────────────────────────
+   [OK] Logging centralizado inicializado
+   [OK] Bot inicializado correctamente
+   [OK] Bot escuchando...
+   ────────────────────────────────────────────────
+
+7.4 Si hay errores
+   Revisar logs para identificar problema
+   Hacer cambios locales
+   Commitear y pushear
+   Railway automáticamente redeploy
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 8: VERIFICAR QUE BOT FUNCIONA
+────────────────────────────────────────────────────────────────────────────
+
+8.1 Abrir Telegram
+   Buscar tu bot
+   Escribir: /start
+
+8.2 Expected response
+   Debe responder con el mensaje de bienvenida
+   Sin errores
+
+8.3 Si no responde
+   Revisar logs en Railway
+   Buscar errores
+   Hacer debug
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 9: CONFIGURAR ALERTAS Y MONITOREO
+────────────────────────────────────────────────────────────────────────────
+
+EN RAILWAY:
+
+9.1 Ir a Monitoring
+   Panel → Monitoring
+
+9.2 Ver métricas
+   - CPU usage
+   - Memory usage
+   - Network
+   - Logs
+
+9.3 Configurar alertas (opcional)
+   Settings → Alerts
+   Seleccionar qué alertar:
+   - High CPU
+   - High Memory
+   - Build failures
+   - Deployment failures
+
+9.4 Email para notificaciones
+   Agregar email donde recibir alertas
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 10: DOMINIO PERSONALIZADO (OPCIONAL)
+────────────────────────────────────────────────────────────────────────────
+
+SI QUIERES USAR DOMINIO PERSONALIZADO:
+
+10.1 Ir a Domains
+    Panel → Domains
+
+10.2 Add custom domain
+    Escribir: bot.tudominio.com
+
+10.3 Railway genera CNAME
+    Copiar el valor
+
+10.4 En tu registro de dominio
+    Agregar CNAME a DNS
+    Esperar propagación (puede tardar 24h)
+
+10.5 Verificar
+    ping bot.tudominio.com
+    Debe resolver
+
+NOTA: Para bots de Telegram, esto es opcional. El webhook de Telegram
+      funciona con Railway URL automática.
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 11: CONFIGURAR BACKUPS Y PERSISTENCIA
+────────────────────────────────────────────────────────────────────────────
+
+SI USAS BASE DE DATOS:
+
+11.1 En Railway → Plugins
+    Clic en "Add"
+
+11.2 Seleccionar "PostgreSQL"
+    Railway crea instancia automáticamente
+
+11.3 Conectar a bot
+    Variable DATABASE_URL se crea automáticamente
+    Tu código debe usar: os.environ.get('DATABASE_URL')
+
+11.4 Backups
+    Railway automáticamente hace backups diarios
+    Ver en Plugins → PostgreSQL → Settings
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 12: MONITORING Y LOGS EN VIVO
+────────────────────────────────────────────────────────────────────────────
+
+VER LOGS EN TIEMPO REAL:
+
+12.1 Railway CLI (recomendado)
+    Instalar: npm install -g railway
+    
+    Login:
+    railway login
+    
+    Ver logs:
+    railway logs --follow
+    
+    Ver servicios:
+    railway status
+
+12.2 Web dashboard
+    Panel → Logs
+    Ver todos los logs en vivo
+
+12.3 Interpretar logs
+    [OK] = operación exitosa
+    [ERROR] = error que requiere atención
+    [WARNING] = advertencia (no crítico)
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 13: ROLLBACK EN CASO DE PROBLEMAS
+────────────────────────────────────────────────────────────────────────────
+
+SI ALGO FALLA:
+
+13.1 Ver historial de deployments
+    Panel → Deployments
+    Ver lista de todos los deployments
+
+13.2 Hacer rollback
+    Clic en un deployment anterior exitoso
+    Clic en "Rollback to this version"
+    Railway automáticamente reinicia bot con versión anterior
+
+13.3 Hacer fix localmente
+    Editar código
+    Hacer tests
+    Commitear
+    git push
+    Railway automáticamente redeploy
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 14: AUTO-DEPLOYMENT (OPCIONAL)
+────────────────────────────────────────────────────────────────────────────
+
+CONFIGURAR PARA DESPLIEGUE AUTOMÁTICO:
+
+14.1 En Railway → Settings
+    Environment
+
+14.2 Auto-deploy from GitHub
+    Seleccionar: "Automatically deploy on push"
+
+14.3 Seleccionar ramas
+    main (o la rama que uses)
+
+14.4 De ahora en adelante
+    Cada vez que hagas push a main:
+    - GitHub notifica a Railway
+    - Railway automáticamente redeploy
+    - Logs se actualizan en vivo
+
+════════════════════════════════════════════════════════════════════════════
+
+PASO 15: DOCUMENTACIÓN Y CHECKLISTS FINALES
+────────────────────────────────────────────────────────────────────────────
+
+ANTES DE CONSIDERARLO "LISTO":
+
+15.1 Checklist de operación
+    [ ] Bot responde a /start
+    [ ] Bot responde a /ayuda
+    [ ] Bot procesa análisis
+    [ ] Logs se generan correctamente
+    [ ] Base de datos (si aplica) funciona
+    [ ] Alertas configuradas
+    [ ] Backups programados
+
+15.2 Checklist de seguridad
+    [ ] API Keys en variables (no en código)
+    [ ] HTTPS/SSL automático (Railway)
+    [ ] Logs protegidos
+    [ ] Base de datos protegida
+    [ ] Rate limiting configurado
+
+15.3 Documentación
+    [ ] README.md con instrucciones
+    [ ] Instrucciones de monitoreo
+    [ ] Procedimiento de rollback
+    [ ] Contacto de soporte
+
+================================================================================
+                      POSIBLES PROBLEMAS Y SOLUCIONES
+================================================================================
+
+PROBLEMA 1: Bot no inicia en Railway
+SOLUCIÓN:
+  - Revisar logs: railway logs --follow
+  - Buscar error específico
+  - Verificar variables de entorno están todas
+  - Hacer rollback a versión anterior
+  - Hacer fix localmente y re-push
+
+PROBLEMA 2: Timeout en API calls
+SOLUCIÓN:
+  - Aumentar timeout en requests
+  - Usar async/await para llamadas largas
+  - Cachear resultados
+  - Revisar logs de Railway para timeouts
+
+PROBLEMA 3: Uso alto de CPU/Memoria
+SOLUCIÓN:
+  - Revisar logs para identificar qué consume
+  - Optimizar código
+  - Aumentar recursos en Railway (pago)
+  - Usar cacheo más agresivo
+
+PROBLEMA 4: Base de datos llena
+SOLUCIÓN:
+  - Hacer cleanup de datos viejos
+  - Aumentar almacenamiento
+  - Implementar rotación de logs
+
+PROBLEMA 5: Bot se desconecta
+SOLUCIÓN:
+  - Revisar logs de Telegram
+  - Verificar que Procfile es correcto
+  - Asegurar que main.py tiene bot.run()
+  - Revisar timeout settings
+
+================================================================================
+                      TIMELINE
+================================================================================
+
+Paso 1: Repositorio GitHub        5 minutos
+Paso 2: Crear Railway project     5 minutos
+Paso 3: Variables de entorno     10 minutos
+Paso 4: Procfile                  2 minutos
+Paso 5: Requirements.txt          5 minutos
+Paso 6: Configurar Railway       10 minutos
+Paso 7: Deploy                   10 minutos
+Paso 8: Verificar                 5 minutos
+Paso 9-15: Setup avanzado        20 minutos
+────────────────────────────────────────
+TOTAL ESTIMADO:                  72 minutos (1 hora 12 minutos)
+
+================================================================================
+                      PROXIMO: EJECUTAR PASOS
+================================================================================
+
+¿Estás listo para ejecutar los pasos?
+
+Di: "comienza paso 1" o "comienza con github"
+
+Entonces haré:
+  1. Crear estructura para GitHub
+  2. Generar Procfile
+  3. Generar requirements.txt
+  4. Instrucciones detalladas para cada paso
+
+================================================================================

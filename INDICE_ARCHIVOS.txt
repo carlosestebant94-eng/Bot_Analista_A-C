@@ -1,0 +1,277 @@
+═══════════════════════════════════════════════════════════════════════════════
+                         📑 ÍNDICE DE ARCHIVOS
+═══════════════════════════════════════════════════════════════════════════════
+
+UBICACIÓN: C:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                            🚀 COMIENZA AQUÍ
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 RESUMEN_EJECUTIVO.txt
+   └─ Resumen de 1 página con todo lo que necesitas saber
+   └─ LEE ESTO PRIMERO
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      📖 GUÍAS Y DOCUMENTACIÓN
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 INSTRUCCIONES_PASO_A_PASO.txt
+   └─ Guía detallada con screenshots mentales
+   └─ Paso 1: Desinstalar Anaconda
+   └─ Paso 2: Instalar Python
+   └─ Paso 3: Instalar Spyder
+   └─ Paso 4: Configurar Bot
+   └─ Solución de problemas comunes
+
+📄 GUIA_RAPIDA_DESINSTALACION.txt
+   └─ Referencia rápida para recordar comandos
+   └─ Checklist final
+   └─ Cómo iniciar el bot en futuro
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      🤖 SCRIPTS AUTOMÁTICOS (Ejecutar en orden)
+═══════════════════════════════════════════════════════════════════════════════
+
+1️⃣  PASO 1: DESINSTALAR ANACONDA
+────────────────────────────────────
+
+📄 1_DESINSTALAR_ANACONDA.ps1
+   Qué hace:
+   ✓ Detiene procesos Python
+   ✓ Elimina carpetas Anaconda
+   ✓ Limpia registro de Windows
+   ✓ Limpia variables de entorno (PATH)
+   ✓ Crea backup por si acaso
+   ✓ Solicita reinicio automático
+   
+   Cómo ejecutar:
+   PowerShell (Administrador)
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+   & '.\1_DESINSTALAR_ANACONDA.ps1'
+   
+   ⏱️  15 minutos (incluye reinicio)
+
+
+2️⃣  PASO 2: INSTALAR PYTHON LIMPIO
+────────────────────────────────────
+
+📄 2_INSTALAR_PYTHON.ps1
+   Qué hace:
+   ✓ Descarga Python 3.12.7 de python.org
+   ✓ Ejecuta instalador visual
+   ✓ Instala pip
+   ✓ Verifica que Python esté en PATH
+   
+   Cómo ejecutar (después del reinicio):
+   PowerShell (Administrador)
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+   & '.\2_INSTALAR_PYTHON.ps1'
+   
+   ⚠️  IMPORTANTE en el instalador:
+      Marca ☑️ "Add Python to PATH"
+   
+   ⏱️  10 minutos
+
+
+3️⃣  PASO 3: INSTALAR SPYDER SIN ANACONDA
+───────────────────────────────────────────
+
+📄 3_INSTALAR_SPYDER_STANDALONE.ps1
+   Qué hace:
+   ✓ Instala Spyder vía pip
+   ✓ Instala NumPy, Pandas, Matplotlib, etc.
+   ✓ Crea acceso directo en Inicio
+   ✓ Crea script INICIAR_SPYDER.bat
+   ✓ Crea acceso directo en Escritorio
+   
+   Cómo ejecutar:
+   PowerShell (normal)
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+   & '.\3_INSTALAR_SPYDER_STANDALONE.ps1'
+   
+   ⏱️  10 minutos
+
+
+4️⃣  PASO 4: CONFIGURAR Y INICIAR EL BOT
+──────────────────────────────────────────
+
+📄 4_INICIAR_BOT.ps1
+   Qué hace:
+   ✓ Crea venv (ambiente del bot)
+   ✓ Instala dependencias (telegram, google.generativeai, etc.)
+   ✓ Crea directorios (logs, data, pdfs)
+   ✓ Crea archivo .env (si no existe)
+   ✓ Verifica módulos Python
+   ✓ Ofrece menú interactivo
+   
+   Cómo ejecutar:
+   PowerShell (normal)
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+   & '.\4_INICIAR_BOT.ps1'
+   
+   Opciones del menú:
+   1 = Iniciar bot ahora
+   2 = Editar .env (para poner credenciales)
+   3 = Crear script automático
+   4 = Ver instrucciones
+   5 = Salir
+   
+   ⏱️  10 minutos
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                         🎯 ARCHIVOS AUXILIARES
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 INICIAR_SPYDER.bat
+   Qué hace:
+   ✓ Inicia Spyder IDE fácilmente
+   
+   Cómo usar:
+   Doble clic en el archivo
+   O desde PowerShell: .\INICIAR_SPYDER.bat
+   
+   Cuándo:
+   Siempre que quieras usar Spyder para análisis
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                        ⚙️  ARCHIVOS DE CONFIGURACIÓN
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 .env
+   Qué es:
+   ✓ Archivo de configuración del bot
+   ✓ Contiene tus credenciales
+   ✓ Se crea automáticamente en Paso 4
+   ✓ NECESITAS EDITARLO con tus credenciales
+   
+   Qué necesitas:
+   • GEMINI_API_KEY (de Google AI Studio)
+   • TELEGRAM_BOT_TOKEN (de @BotFather)
+   • TELEGRAM_CHAT_ID (de API de Telegram)
+   
+   Cómo editarlo:
+   1. Abre con Notepad
+   2. Rellena los valores
+   3. Guarda (Ctrl+S)
+   4. Reinicia el bot
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                        📁 DIRECTORIOS CREADOS AUTOMÁTICAMENTE
+═══════════════════════════════════════════════════════════════════════════════
+
+venv_bot/
+   └─ Ambiente virtual del bot (se crea en Paso 4)
+   └─ Contiene Python aislado y dependencias
+   └─ No tocar, solo activar con: .\venv_bot\Scripts\activate
+
+logs/
+   └─ Archivos de log del bot
+   └─ Útil para debugging
+
+data/
+   └─ Datos del análisis
+   ├─ reportes/   (reportes PDF exportados)
+   └─ Otros datos
+
+pdfs/
+   └─ PDFs generados
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                            📋 ORDEN DE LECTURA RECOMENDADO
+═══════════════════════════════════════════════════════════════════════════════
+
+1. RESUMEN_EJECUTIVO.txt (5 min)
+   └─ Entiende el panorama general
+
+2. INSTRUCCIONES_PASO_A_PASO.txt (15 min)
+   └─ Lee los pasos ANTES de ejecutar
+
+3. Ejecuta 1_DESINSTALAR_ANACONDA.ps1 (15 min)
+   └─ Espera reinicio
+
+4. Ejecuta 2_INSTALAR_PYTHON.ps1 (10 min)
+   └─ Marca "Add to PATH" en instalador
+
+5. Ejecuta 3_INSTALAR_SPYDER_STANDALONE.ps1 (10 min)
+   └─ Instalará automáticamente
+
+6. Ejecuta 4_INICIAR_BOT.ps1 (10 min)
+   └─ Selecciona opción 2 para editar .env
+
+7. Edita .env (3 min)
+   └─ Añade credenciales
+
+8. GUIA_RAPIDA_DESINSTALACION.txt (referencia futura)
+   └─ Para recordar cómo iniciar el bot en futuro
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                          ⏱️  TIEMPO TOTAL
+═══════════════════════════════════════════════════════════════════════════════
+
+Lectura:               5 min (RESUMEN_EJECUTIVO.txt)
+Lectura detallada:    15 min (INSTRUCCIONES_PASO_A_PASO.txt)
+Script 1:             15 min (desinstalar + reinicio)
+Script 2:             10 min (instalar Python)
+Script 3:             10 min (instalar Spyder)
+Script 4:             10 min (configurar bot)
+Editar .env:           3 min (añadir credenciales)
+                    ─────────
+TOTAL:               ~68 minutos (una sola vez)
+
+Después: Solo doble clic en INICIAR_BOT.bat o PowerShell
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                          ✅ VERIFICACIÓN FINAL
+═══════════════════════════════════════════════════════════════════════════════
+
+Después de completar todos los pasos:
+
+☑️  Anaconda no existe (conda --version muestra error)
+☑️  Python funciona (python --version muestra 3.12.x)
+☑️  Spyder funciona (python -m spyder abre Spyder)
+☑️  venv_bot existe
+☑️  .env completado con credenciales
+☑️  Bot inicia (python main.py)
+☑️  Bot responde en Telegram
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                          🆘 AYUDA RÁPIDA
+═══════════════════════════════════════════════════════════════════════════════
+
+¿Dónde está mi error?
+   → INSTRUCCIONES_PASO_A_PASO.txt sección "🆘 PROBLEMAS COMUNES"
+
+¿Cómo inicio el bot la próxima vez?
+   → GUIA_RAPIDA_DESINSTALACION.txt sección "🚀 INICIAR EL BOT"
+
+¿Cómo uso Spyder en futuro?
+   → GUIA_RAPIDA_DESINSTALACION.txt sección "USO DE SPYDER"
+
+¿Necesito descargar algo manual?
+   → No, todos los scripts descargan lo necesario
+
+¿Puedo desinstalar Anaconda después?
+   → Sí, pero primero completa todos los pasos
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                            🎉 ¡COMIENZA AHORA!
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Lee RESUMEN_EJECUTIVO.txt
+2. Sigue INSTRUCCIONES_PASO_A_PASO.txt
+3. Ejecuta los 4 scripts en orden
+4. ¡Listo!
+
+═══════════════════════════════════════════════════════════════════════════════

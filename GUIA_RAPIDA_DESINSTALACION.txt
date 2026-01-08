@@ -1,0 +1,280 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    GUÍA RÁPIDA - DESINSTALACIÓN ANACONDA                  ║
+║                          Y CONFIGURACIÓN DEL BOT                           ║
+║                                                                            ║
+║                    Todo funciona SIN ANACONDA después                      ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════════════════════
+                              🎯 OBJETIVO FINAL
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ Desinstalar Anaconda (libera 3-4 GB)
+✅ Instalar Python limpio (Python.org)
+✅ Instalar Spyder sin depender de Anaconda
+✅ Bot funcionando perfectamente
+✅ Cero conflictos de PATH
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                            📋 ORDEN DE EJECUCIÓN
+═══════════════════════════════════════════════════════════════════════════════
+
+PASO 1: Desinstalar Anaconda
+──────────────────────────────
+Abre PowerShell como ADMINISTRADOR:
+   • Presiona WIN + X
+   • Selecciona "Windows PowerShell (Administrador)"
+   • Copia y pega:
+   
+     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+     & 'c:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\1_DESINSTALAR_ANACONDA.ps1'
+
+   El script:
+   ✓ Detiene procesos Python
+   ✓ Elimina carpetas Anaconda
+   ✓ Limpia variables de entorno
+   ✓ Limpia registro
+   ✓ Te pedirá reiniciar
+   
+⏱️  Tiempo: 10-15 minutos (incluye reinicio)
+
+
+PASO 2: Instalar Python limpio
+────────────────────────────────
+Después del reinicio, abre PowerShell de nuevo (como ADMINISTRADOR):
+   
+     & 'c:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\2_INSTALAR_PYTHON.ps1'
+
+   El script:
+   ✓ Descarga Python 3.12.7 de python.org
+   ✓ Ejecuta el instalador
+   ✓ ⚠️  IMPORTANTE: MARCA "Add Python to PATH" en la ventana del instalador
+   ✓ Verifica la instalación
+   
+⏱️  Tiempo: 5-10 minutos (incluye descarga)
+
+
+PASO 3: Instalar Spyder (para análisis de datos)
+──────────────────────────────────────────────────
+Abre PowerShell (normal, no admin):
+
+     & 'c:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\3_INSTALAR_SPYDER_STANDALONE.ps1'
+
+   El script:
+   ✓ Instala Spyder vía pip
+   ✓ Instala todas las librerías: numpy, pandas, matplotlib, scipy, scikit-learn
+   ✓ Crea acceso directo en Inicio
+   ✓ Crea script INICIAR_SPYDER.bat en Escritorio
+   ✓ Crea acceso directo en Escritorio
+   
+⏱️  Tiempo: 5-10 minutos (incluye descargas)
+
+
+PASO 4: Configurar y iniciar Bot
+─────────────────────────────────
+Abre PowerShell:
+
+     & 'c:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\4_INICIAR_BOT.ps1'
+
+   El script:
+   ✓ Crea venv para el bot
+   ✓ Instala todas las dependencias
+   ✓ Crea directorios necesarios
+   ✓ Crea archivo .env (si no existe)
+   ✓ Verifica módulos Python
+   ✓ Te ofrece opciones interactivas
+   
+⏱️  Tiempo: 5-10 minutos
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                        ⚙️  CONFIGURACIÓN MANUAL DEL BOT
+═══════════════════════════════════════════════════════════════════════════════
+
+Después de ejecutar los 4 scripts, EDITA EL ARCHIVO .env:
+
+Ubicación:
+   C:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\.env
+
+Abre con Notepad y rellena:
+
+   GEMINI_API_KEY=TU_CLAVE_AQUI
+   TELEGRAM_BOT_TOKEN=TU_TOKEN_AQUI
+   TELEGRAM_CHAT_ID=TU_CHAT_ID_AQUI
+
+CÓMO OBTENERLOS:
+
+1. Google Gemini API Key:
+   • Visita: https://aistudio.google.com/app/apikey
+   • Click "Create API Key"
+   • Copia y pega en .env
+
+2. Telegram Bot Token:
+   • Abre Telegram
+   • Busca @BotFather
+   • Envía /newbot
+   • Sigue las instrucciones
+   • Copia el token
+
+3. Telegram Chat ID:
+   • Envía cualquier mensaje a tu bot
+   • Abre navegador: https://api.telegram.org/botTOKEN/getUpdates
+   • Reemplaza TOKEN con tu token real
+   • Busca el campo "id" bajo "chat"
+   • Copia ese número
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                          🚀 INICIAR EL BOT
+═══════════════════════════════════════════════════════════════════════════════
+
+OPCIÓN A: Desde PowerShell (Recomendado)
+──────────────────────────────────────────
+cd 'C:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C'
+.\venv_bot\Scripts\activate
+python main.py
+
+
+OPCIÓN B: Desde batch (más simple)
+────────────────────────────────────
+1. Crea INICIAR_BOT.bat (el script 4 puede hacerlo)
+2. Haz doble clic en el archivo
+3. El bot se abrirá en una ventana
+
+
+OPCIÓN C: En segundo plano (producción)
+─────────────────────────────────────────
+PowerShell (como ADMINISTRADOR):
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+
+Start-Process -WindowStyle Hidden `
+  -FilePath 'C:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\venv_bot\Scripts\python.exe' `
+  -ArgumentList 'main.py' `
+  -WorkingDirectory 'C:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C'
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                     ✅ VERIFICAR QUE TODO FUNCIONA
+═══════════════════════════════════════════════════════════════════════════════
+
+Abre PowerShell en el directorio del bot:
+
+1. Verifica Python:
+   python --version
+   (Debe mostrar Python 3.12.x)
+
+2. Verifica pip:
+   python -m pip --version
+   (Debe mostrar versión)
+
+3. Verifica módulos principales:
+   python -c "import telegram; import google.generativeai; print('OK')"
+   (Debe mostrar OK)
+
+4. Verifica Spyder:
+   python -m spyder --version
+   (Debe mostrar versión)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                          🆘 SOLUCIONAR PROBLEMAS
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ "Python no se encuentra"
+───────────────────────────
+Solución:
+   1. Reinicia PowerShell completamente (cierra y abre de nuevo)
+   2. Si sigue fallando, reinstala Python (script 2)
+   3. ASEGÚRATE de marcar "Add Python to PATH"
+
+
+❌ "ModuleNotFoundError: No module named 'telegram'"
+─────────────────────────────────────────────────────
+Solución:
+   .\venv_bot\Scripts\activate
+   python -m pip install -r requirements.txt
+   python -m pip install python-telegram-bot
+
+
+❌ "ModuleNotFoundError: No module named 'google.generativeai'"
+────────────────────────────────────────────────────────────────
+Solución:
+   .\venv_bot\Scripts\activate
+   python -m pip install google-generativeai
+
+
+❌ El bot se detiene al iniciar
+──────────────────────────────
+Revisa:
+   1. ¿Está .env completo con credenciales reales?
+   2. ¿Son válidos los tokens de Telegram y Gemini?
+   3. Abre PowerShell sin redireccionar output para ver el error:
+      .\venv_bot\Scripts\activate
+      python main.py
+
+
+❌ Spyder no inicia
+──────────────────
+Solución:
+   python -m spyder
+
+   Si falla:
+   python -m pip install --upgrade spyder
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                          📊 CHECKLIST FINAL
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ Paso 1: Anaconda desinstalado
+   • No existe C:\Users\sk894\anaconda3
+   • No existe C:\ProgramData\anaconda3
+   • conda no existe en PATH
+
+✅ Paso 2: Python instalado
+   • python --version funciona
+   • Muestra 3.12.x
+   • PATH limpio (sin anaconda)
+
+✅ Paso 3: Spyder funciona
+   • python -m spyder funciona
+   • Aparece la ventana de Spyder
+   • Acceso directo en Inicio
+
+✅ Paso 4: Bot funciona
+   • venv_bot existe
+   • .\venv_bot\Scripts\activate funciona
+   • python main.py inicia el bot
+   • Bot está en línea en Telegram
+   • Los comandos funcionan
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                        🎉 ¡ÉXITO! RESUMEN
+═══════════════════════════════════════════════════════════════════════════════
+
+Una vez completados todos los pasos:
+
+✓ Anaconda completamente desinstalado (+3-4 GB libres)
+✓ Python limpio y funcional
+✓ Spyder funciona sin Anaconda
+✓ Bot 100% operacional
+✓ Cero conflictos de PATH
+✓ Cero interferencias del sistema
+✓ Bot puede ejecutarse en segundo plano
+✓ Todos los comandos funcionan
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                        📞 INFORMACIÓN DE CONTACTO
+═══════════════════════════════════════════════════════════════════════════════
+
+Si algo no funciona:
+   1. Copia todo el texto del error
+   2. Abre una terminal nueva
+   3. Intenta de nuevo
+   4. Si persiste, revisa el archivo de log: logs/bot.log
+
+═══════════════════════════════════════════════════════════════════════════════

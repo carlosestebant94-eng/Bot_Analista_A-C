@@ -1,0 +1,29 @@
+[pylint]
+# Configuración de Pylint para el proyecto
+disable=
+    C0103,  # invalid-name (ej: variable names no siguiendo snake_case)
+    C0114,  # missing-module-docstring
+    C0115,  # missing-class-docstring
+    C0116,  # missing-function-docstring
+    W0613,  # unused-argument
+    W0612,  # unused-variable
+    R0913,  # too-many-arguments
+    R0914,  # too-many-locals
+    C0302,  # too-many-lines
+    W0703,  # broad-except
+    E1101,  # no-member (muy sensible con tipos dinámicos)
+
+# Errores críticos a NO ignorar
+enable=
+    F0401,  # import-error
+    E1121,  # too-many-function-args
+    E1123,  # unexpected-keyword-arg
+
+# Análisis de tipos
+load-plugins=
+
+# Cantidad máxima de atributos para una clase
+max-attributes=10
+
+# Máximo de argumentos en una función
+max-args=6

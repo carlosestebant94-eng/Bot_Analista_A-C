@@ -1,0 +1,2 @@
+# Este archivo marca el paquete como type-checked
+# Indica que el proyecto soporta type hints y está siendo analizado por mypy/pylance

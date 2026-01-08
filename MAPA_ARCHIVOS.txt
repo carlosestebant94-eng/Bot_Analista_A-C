@@ -1,0 +1,288 @@
+═══════════════════════════════════════════════════════════════════════════════
+                        📍 MAPA DE ARCHIVOS
+═══════════════════════════════════════════════════════════════════════════════
+
+Ubicación: c:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\
+
+Todos los archivos están en la MISMA carpeta del bot.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      🔴 PUNTO DE PARTIDA (LEE PRIMERO)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. 📄 00_LEEME_PRIMERO.txt
+   └─ Resumen ejecutivo general
+   └─ Qué es lo que vas a hacer
+   └─ Archivos disponibles
+   └─ Lee PRIMERO (2 min)
+
+2. 📄 START_HERE.txt
+   └─ Instrucciones iniciales
+   └─ Checklist pre-ejecución
+   └─ Consejos importantes
+   └─ Lee SEGUNDO (5 min)
+
+3. 📄 OPCION_1_RESUMEN.txt
+   └─ Resumen de la opción elegida
+   └─ Qué va a pasar paso a paso
+   └─ Beneficios esperados
+   └─ Lee TERCERO (5 min)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      🟠 GUÍAS DETALLADAS Y REFERENCIA
+═══════════════════════════════════════════════════════════════════════════════
+
+4. 📄 RESUMEN_EJECUTIVO.txt
+   └─ Panorama general del proyecto
+   └─ Problema y solución
+   └─ Cronograma estimado
+   └─ Lee para contexto general (5 min)
+
+5. 📄 INSTRUCCIONES_PASO_A_PASO.txt ⭐ MÁS IMPORTANTE
+   └─ Instrucciones EXACTAS para cada paso
+   └─ Cómo obtener credenciales
+   └─ Solución de problemas comunes
+   └─ Verificación post-instalación
+   └─ DEBES leer ANTES de ejecutar (10 min)
+
+6. 📄 GUIA_RAPIDA_DESINSTALACION.txt
+   └─ Referencia rápida de comandos
+   └─ Para futuras ejecuciones
+   └─ Checklist final
+   └─ Cómo iniciar el bot (próximas veces)
+
+7. 📄 DIAGRAMA_PROCESO.txt
+   └─ Diagrama visual ASCII del proceso
+   └─ Antes vs Después
+   └─ Timeline estimado
+   └─ Para entender visualmente (5 min)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      🟡 INFORMACIÓN ADICIONAL
+═══════════════════════════════════════════════════════════════════════════════
+
+8. 📄 INDICE_ARCHIVOS.txt
+   └─ Índice de TODOS los archivos
+   └─ Orden de lectura recomendado
+   └─ Descripción de cada archivo
+   └─ Tiempo estimado
+
+9. 📄 LISTA_ARCHIVOS_CREADOS.txt
+   └─ Inventario de archivos creados
+   └─ Qué hace cada uno
+   └─ Cambios en el sistema
+   └─ Para referencia
+
+10. 📄 AUDITORIA_ANACONDA.txt
+    └─ Análisis del problema Anaconda
+    └─ Uso de Anaconda detectado (Spyder)
+    └─ Opciones disponibles
+    └─ Para entender el problema
+
+11. 📄 SOLUCION_COMPLETA_LISTA.txt
+    └─ Resumen de lo que tienes
+    └─ Cómo comenzar
+    └─ FAQ
+    └─ Para verificar que todo está listo
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      🟢 SCRIPTS A EJECUTAR (EN ORDEN)
+═══════════════════════════════════════════════════════════════════════════════
+
+1️⃣  📄 1_DESINSTALAR_ANACONDA.ps1
+    └─ Desinstala Anaconda completamente
+    └─ Ejecutar con: PowerShell (Administrador)
+    └─ Tiempo: 15 minutos
+    └─ Incluye reinicio automático de Windows
+
+2️⃣  📄 2_INSTALAR_PYTHON.ps1
+    └─ Instala Python 3.12.7 de python.org
+    └─ Ejecutar con: PowerShell (Administrador)
+    └─ Tiempo: 10 minutos
+    └─ ⚠️ Marca "Add Python to PATH" en instalador
+
+3️⃣  📄 3_INSTALAR_SPYDER_STANDALONE.ps1
+    └─ Instala Spyder IDE sin Anaconda
+    └─ Ejecutar con: PowerShell (normal)
+    └─ Tiempo: 10 minutos
+    └─ Crea accesos directos
+
+4️⃣  📄 4_INICIAR_BOT.ps1
+    └─ Configura el bot completamente
+    └─ Ejecutar con: PowerShell (normal)
+    └─ Tiempo: 10 minutos
+    └─ Menú interactivo
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      🟢 SCRIPTS AUXILIARES
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 INICIAR_SPYDER.bat
+   └─ Inicia Spyder IDE fácilmente
+   └─ Usar: Doble clic en el archivo
+   └─ Se crea automáticamente en Paso 3
+   └─ Útil para futuras veces
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      🔄 FLUJO RECOMENDADO
+═══════════════════════════════════════════════════════════════════════════════
+
+LECTURA:
+   00_LEEME_PRIMERO.txt
+        ↓
+   START_HERE.txt
+        ↓
+   OPCION_1_RESUMEN.txt
+        ↓
+   INSTRUCCIONES_PASO_A_PASO.txt (MÁS IMPORTANTE)
+        ↓
+
+EJECUCIÓN:
+   1_DESINSTALAR_ANACONDA.ps1 (+ reinicio)
+        ↓
+   2_INSTALAR_PYTHON.ps1
+        ↓
+   3_INSTALAR_SPYDER_STANDALONE.ps1
+        ↓
+   4_INICIAR_BOT.ps1 (opción 2 - editar .env)
+        ↓
+
+CONFIGURACIÓN:
+   Edita .env con credenciales
+        ↓
+   ✅ BOT FUNCIONANDO
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      ⏱️  TIEMPO ESTIMADO POR SECCIÓN
+═══════════════════════════════════════════════════════════════════════════════
+
+LECTURA:
+   00_LEEME_PRIMERO.txt:           2 minutos
+   START_HERE.txt:                 5 minutos
+   OPCION_1_RESUMEN.txt:           5 minutos
+   INSTRUCCIONES_PASO_A_PASO.txt:  10 minutos
+   ───────────────────────────────────────
+   SUBTOTAL:                      22 minutos
+
+EJECUCIÓN:
+   1_DESINSTALAR_ANACONDA.ps1:    15 minutos
+   2_INSTALAR_PYTHON.ps1:         10 minutos
+   3_INSTALAR_SPYDER_STANDALONE:  10 minutos
+   4_INICIAR_BOT.ps1:             10 minutos
+   ───────────────────────────────────────
+   SUBTOTAL:                      45 minutos
+
+CONFIGURACIÓN:
+   Editar .env:                    3 minutos
+   ───────────────────────────────────────
+   SUBTOTAL:                       3 minutos
+
+═════════════════════════════════════════════════════════════════════════════
+TOTAL TIEMPO:                    ~70 minutos
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      🎯 MÉTRICA DE PROGRESO
+═══════════════════════════════════════════════════════════════════════════════
+
+Inicio:
+   ☐ Leo 00_LEEME_PRIMERO.txt
+   ☐ Leo START_HERE.txt
+   ☐ Leo OPCION_1_RESUMEN.txt
+   ☐ Leo INSTRUCCIONES_PASO_A_PASO.txt
+
+Paso 1:
+   ☐ Ejecuto 1_DESINSTALAR_ANACONDA.ps1
+   ☐ Windows se reinicia
+   ☐ Verifico: conda --version (debe fallar)
+
+Paso 2:
+   ☐ Ejecuto 2_INSTALAR_PYTHON.ps1
+   ☐ Verifico: python --version (debe mostrar 3.12.x)
+
+Paso 3:
+   ☐ Ejecuto 3_INSTALAR_SPYDER_STANDALONE.ps1
+   ☐ Verifico: python -m spyder (abre Spyder)
+
+Paso 4:
+   ☐ Ejecuto 4_INICIAR_BOT.ps1
+   ☐ Edito .env con credenciales
+   ☐ Verifico: Bot en línea en Telegram
+
+Final:
+   ☐ Bot funcionando 100%
+   ☐ Spyder disponible
+   ☐ Sistema limpio
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      ❓ DÓNDE ENCONTRAR...
+═══════════════════════════════════════════════════════════════════════════════
+
+¿Cómo empiezo?
+   └─ Lee: 00_LEEME_PRIMERO.txt
+
+¿Qué hacer si algo falla?
+   └─ Lee: INSTRUCCIONES_PASO_A_PASO.txt (sección 🆘)
+
+¿Cómo iniciar el bot próximas veces?
+   └─ Lee: GUIA_RAPIDA_DESINSTALACION.txt
+
+¿Qué archivos se crean?
+   └─ Lee: LISTA_ARCHIVOS_CREADOS.txt
+
+¿Cuál es el problema con Anaconda?
+   └─ Lee: AUDITORIA_ANACONDA.txt
+
+¿Diagrama visual del proceso?
+   └─ Lee: DIAGRAMA_PROCESO.txt
+
+¿Dónde están todos los archivos?
+   └─ Lee: INDICE_ARCHIVOS.txt
+
+¿Todo está listo?
+   └─ Lee: SOLUCION_COMPLETA_LISTA.txt
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      ✅ VERIFICACIÓN RÁPIDA
+═══════════════════════════════════════════════════════════════════════════════
+
+Verifica que tienes estos archivos principales:
+
+Lectura:
+   ☑️ 00_LEEME_PRIMERO.txt
+   ☑️ START_HERE.txt
+   ☑️ OPCION_1_RESUMEN.txt
+   ☑️ INSTRUCCIONES_PASO_A_PASO.txt
+
+Scripts:
+   ☑️ 1_DESINSTALAR_ANACONDA.ps1
+   ☑️ 2_INSTALAR_PYTHON.ps1
+   ☑️ 3_INSTALAR_SPYDER_STANDALONE.ps1
+   ☑️ 4_INICIAR_BOT.ps1
+
+Auxiliares:
+   ☑️ INICIAR_SPYDER.bat
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                      🎉 ¡ESTÁS LISTO!
+═══════════════════════════════════════════════════════════════════════════════
+
+Todos los archivos están en la carpeta del bot.
+
+No necesitas descargar nada.
+No necesitas instalar nada extra.
+Todo está aquí.
+
+👉 Comienza leyendo: 00_LEEME_PRIMERO.txt
+
+═══════════════════════════════════════════════════════════════════════════════

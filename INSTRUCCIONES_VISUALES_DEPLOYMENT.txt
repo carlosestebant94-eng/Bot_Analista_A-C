@@ -1,0 +1,577 @@
+================================================================================
+              INSTRUCCIONES VISUALES - DEPLOYMENT PASO A PASO
+                      Fase 5C - Producción
+================================================================================
+
+Este documento es una guía VISUAL para hacer deployment a Railway.
+Lee y sigue CADA PASO exactamente como se describe.
+
+================================================================================
+                    PASO 1: PREPARAR GIT (5 minutos)
+================================================================================
+
+QUÉ HAREMOS:
+  Enviar código a GitHub para que Railway pueda verlo
+
+REQUISITOS:
+  ✓ Tener GitHub account (github.com)
+  ✓ Tener Git instalado en tu PC
+  ✓ .env creado con todas las API keys
+
+PASOS:
+
+1.1) Abrir Terminal/PowerShell (en Windows: Windows + R → cmd)
+
+1.2) Navegar a la carpeta del proyecto:
+     cd "C:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C"
+
+1.3) Verificar que Git funciona:
+     git --version
+     Debe mostrar: git version X.X.X
+
+1.4) Verificar que hay código:
+     ls -la | grep main.py
+     Debe mostrar: main.py
+
+1.5) Inicializar Git (si no lo hiciste):
+     git init
+
+1.6) Verificar que .env está en .gitignore:
+     cat .gitignore | grep .env
+     Debe mostrar: .env
+     
+     SI NO APARECE, ejecutar:
+     echo .env >> .gitignore
+
+1.7) Agregar todos los archivos:
+     git add .
+
+1.8) Crear commit:
+     git commit -m "Phase 5C: Ready for Railway deployment"
+
+1.9) Crear repositorio en GitHub:
+     - Ir a: https://github.com/new
+     - Repository name: bot-analyst-ac
+     - Descripción: "Bot Analyst v2.1 - AI Trading Assistant"
+     - Seleccionar: Public (para que Railway lo vea)
+     - Click: "Create repository"
+
+     RESULTADO: Verás instrucciones para "push an existing repository"
+
+1.10) Copiar el comando que dice:
+      git remote add origin https://github.com/TU_USUARIO/bot-analyst-ac.git
+      Y ejecutarlo en tu terminal
+
+1.11) Cambiar rama a main:
+      git branch -M main
+
+1.12) Hacer push:
+      git push -u origin main
+
+      Esperar a que termine (puede tomar 1-2 minutos)
+
+VALIDACIÓN:
+  ✓ Ir a GitHub
+  ✓ Ver tu repositorio en github.com/TU_USUARIO/bot-analyst-ac
+  ✓ Ver archivos: main.py, Procfile, requirements.txt, etc.
+  ✓ NO ver: .env (debe estar oculto)
+
+RESULTADO ESPERADO:
+  ✅ Código en GitHub, listo para Railway
+
+================================================================================
+                    PASO 2: CREAR CUENTA RAILWAY (5 minutos)
+================================================================================
+
+QUÉ HAREMOS:
+  Crear cuenta en Railway.app (plataforma de hosting)
+
+PASOS:
+
+2.1) Ir a: https://railway.app
+
+2.2) Click en: "Login with GitHub"
+     (Esto es más fácil que crear cuenta manual)
+
+2.3) Autorizar acceso:
+     - GitHub preguntará: "Autorizar Railway?"
+     - Click: "Authorize railwayapp"
+
+2.4) Confirmar email (si lo pide):
+     - Railway te enviará email de confirmación
+     - Click en link de confirmación
+     - Listo
+
+VALIDACIÓN:
+  ✓ Estar logueado en Railway
+  ✓ Ver dashboard (tu panel de control)
+  ✓ Ver opción: "New Project"
+
+RESULTADO ESPERADO:
+  ✅ Cuenta Railway creada y verificada
+
+================================================================================
+                    PASO 3: CREAR PROYECTO RAILWAY (5 minutos)
+================================================================================
+
+QUÉ HAREMOS:
+  Conectar tu repositorio de GitHub a Railway
+
+PASOS:
+
+3.1) En Railway dashboard, click: "New Project"
+
+3.2) Seleccionar: "Deploy from GitHub repo"
+     (NO selecciones "Create new repo" ni otras opciones)
+
+3.3) Autorizar GitHub:
+     - Click: "Connect GitHub account" (si lo pide)
+     - Seleccionar: "All repositories"
+     - Click: "Authorize"
+
+3.4) Buscar repositorio:
+     - Escribir: "bot-analyst-ac"
+     - Debe aparecer en la lista
+     - Click: Seleccionar
+
+3.5) Click: "Deploy"
+     (Railway comenzará a importar tu código)
+
+3.6) Esperar a que termine:
+     - Verás barra de progreso
+     - Toma ~1-2 minutos
+     - Cuando termine, verás: "Success" en verde
+
+VALIDACIÓN:
+  ✓ Railway está importando el código
+  ✓ Verás la carpeta con tus archivos
+  ✓ Dashboard muestra tu proyecto
+
+RESULTADO ESPERADO:
+  ✅ Proyecto creado en Railway, pero aún sin variables
+
+================================================================================
+                    PASO 4: AGREGAR VARIABLES DE ENTORNO (10 minutos)
+================================================================================
+
+QUÉ HAREMOS:
+  Decirle a Railway dónde están tus API keys (en variables, no en código)
+
+PASOS:
+
+4.1) En tu proyecto Railway, click: "Variables"
+     (Si no lo ves, click en "Settings" y busca "Variables")
+
+4.2) Click: "New Variable" (o "+ Add Variable")
+
+4.3) Agregar CADA UNA de estas variables:
+
+     4.3.1) TELEGRAM_TOKEN
+            - Key: TELEGRAM_TOKEN
+            - Value: [tu-token-aqui]
+            - Click: "Add"
+            
+            ¿Dónde conseguir?
+            - Telegram: @BotFather
+            - Comando: /token
+            - Te dará: 123456:ABCdefGHIjklmnopQRSTuvwxyz
+
+     4.3.2) GOOGLE_API_KEY
+            - Key: GOOGLE_API_KEY
+            - Value: [tu-api-key-aqui]
+            - Click: "Add"
+            
+            ¿Dónde conseguir?
+            - Google Cloud Console: console.cloud.google.com
+            - Crear API key
+            - Copiar key
+
+     4.3.3) FRED_API_KEY
+            - Key: FRED_API_KEY
+            - Value: [tu-fred-key-aqui]
+            - Click: "Add"
+            
+            ¿Dónde conseguir?
+            - Federal Reserve: stlouisfed.org/fred
+            - Crear cuenta
+            - Generar API key
+
+     4.3.4) POLYGON_API_KEY
+            - Key: POLYGON_API_KEY
+            - Value: [tu-polygon-key-aqui]
+            - Click: "Add"
+            
+            ¿Dónde conseguir?
+            - Polygon.io: polygon.io
+            - Crear cuenta (gratis)
+            - API key en dashboard
+
+     4.3.5) ALPHA_VANTAGE_KEY
+            - Key: ALPHA_VANTAGE_KEY
+            - Value: [tu-alpha-key-aqui]
+            - Click: "Add"
+            
+            ¿Dónde conseguir?
+            - Alpha Vantage: alphavantage.co
+            - Crear cuenta (gratis)
+            - API key por email
+
+     4.3.6) LOG_LEVEL
+            - Key: LOG_LEVEL
+            - Value: INFO
+            - Click: "Add"
+
+     4.3.7) ENVIRONMENT
+            - Key: ENVIRONMENT
+            - Value: production
+            - Click: "Add"
+
+4.4) Verificar que todas aparecen:
+     - Deberías ver 7 variables en la lista
+     - Cada una con ✓ verde
+
+VALIDACIÓN:
+  ✓ Ver todas las 7 variables en la lista
+  ✓ Ninguna variable vacía
+  ✓ Todos los valores correcto (sin espacios al inicio/final)
+
+RESULTADO ESPERADO:
+  ✅ Todas las variables configuradas
+
+NOTA:
+  Las variables NO se guardan en GitHub (seguro)
+  Solo Railway las ve
+  Si alguien accede tu GitHub, no verá las API keys
+
+================================================================================
+                    PASO 5: INICIAR DEPLOYMENT (10 minutos)
+================================================================================
+
+QUÉ HAREMOS:
+  Decirle a Railway que inicie el bot
+
+PASOS:
+
+5.1) En tu proyecto, click: "Deploy"
+     (O si no lo ves, click en el botón que dice "Redeploy")
+
+5.2) Esperar:
+     - Railway descargará dependencias (pip install...)
+     - Iniciará Python
+     - Esperamos ~2-5 minutos
+     
+     VERÁS:
+     - Barra de progreso
+     - Texto que dice "Building"
+     - Luego "Running"
+
+5.3) Ver logs en vivo:
+     - Click: "Logs" (o "View Logs")
+     - Verás texto en vivo del bot iniciando
+     
+     BUSCAR ESTE MENSAJE:
+     "[OK] Bot escuchando en Telegram..."
+     
+     SI LO VES = Bot inició correctamente ✓
+     SI VES "[ERROR]" = Hay problema, ver paso TROUBLESHOOTING
+
+5.4) Si todo está bien:
+     - Verás "Status: Running" en verde
+     - El bot está ONLINE
+
+VALIDACIÓN:
+  ✓ Status dice: "Running" (verde)
+  ✓ Logs muestran: "[OK] Bot escuchando..."
+  ✓ NO hay "[ERROR]" en rojo
+
+RESULTADO ESPERADO:
+  ✅ Bot iniciado en Railway y corriendo 24/7
+
+IMPORTANTE:
+  - El bot NUNCA se apagará
+  - Railroad lo mantiene corriendo automáticamente
+  - Si hay error, se reinicia solo
+
+================================================================================
+                    PASO 6: VALIDAR EN TELEGRAM (5 minutos)
+================================================================================
+
+QUÉ HAREMOS:
+  Verificar que el bot responde en Telegram
+
+PASOS:
+
+6.1) Abrir Telegram en tu teléfono/PC
+
+6.2) Buscar tu bot:
+     - Escribir: @TU_NOMBRE_BOT_AQUI
+     - Debe aparecer en la lista
+     - Click para abrirlo
+
+6.3) Enviar comando: /start
+     - Escribir: /start
+     - Click: Enviar
+     - ESPERAR respuesta
+
+6.4) Verificar respuesta:
+     
+     SI FUNCIONA:
+     - Recibes mensaje de bienvenida
+     - Dice: "Hola, soy Bot Analyst..."
+     - Todo bien ✓
+
+     SI NO FUNCIONA:
+     - No recibes respuesta (o error)
+     - Ver TROUBLESHOOTING abajo
+
+6.5) Probar otros comandos:
+     - /ayuda → debe mostrar ayuda
+     - Escribir símbolo/ticker (ej: AAPL) → debe analizar
+     - Escribir número → debe predecir
+
+VALIDACIÓN:
+  ✓ Bot responde a /start
+  ✓ Bot responde a otros comandos
+  ✓ Mensajes llegan en < 2 segundos
+
+RESULTADO ESPERADO:
+  ✅ Bot en Telegram funcionando perfectamente
+
+================================================================================
+                    PASO 7: CONFIGURAR MONITOREO (5 minutos)
+================================================================================
+
+QUÉ HAREMOS:
+  Ver métricas de cómo va tu bot (CPU, memoria, etc.)
+
+PASOS:
+
+7.1) En tu proyecto Railway, click: "Monitoring"
+     (O "Metrics" si lo llama así)
+
+7.2) Ver gráficos:
+     - CPU usage: debe estar VERDE (< 20%)
+     - Memory usage: debe estar VERDE (< 30%)
+     - Network: debe mostrar tráfico
+
+7.3) Valores normales:
+     CPU: 5-15%        ✓ Normal
+     Memory: 15-25%    ✓ Normal
+     
+     CPU: 50%+         ⚠ Alto (pero aceptable)
+     Memory: 50%+      ⚠ Revisar
+
+7.4) Recordar revisar diariamente:
+     - Todos los días, ver métricas
+     - Si CPU/Memory suben, puede haber problema
+     - Contactar si ves anormalidades
+
+VALIDACIÓN:
+  ✓ Ver métricas en tiempo real
+  ✓ CPU y Memory están en rango normal
+  ✓ Network muestra actividad
+
+RESULTADO ESPERADO:
+  ✅ Monitoreo configurado y funcionando
+
+================================================================================
+                    TROUBLESHOOTING - EN CASO DE PROBLEMAS
+================================================================================
+
+PROBLEMA 1: Bot no responde en Telegram
+──────────────────────────────────────────
+
+QUÉ REVISAR:
+  1. En Railway, ir a "Logs"
+  2. Buscar línea con "[ERROR]" en rojo
+  3. Leer el mensaje completo
+
+ERRORES COMUNES:
+
+ERROR: "TELEGRAM_TOKEN not found"
+→ Solución: Ir a Variables, verificar TELEGRAM_TOKEN está ahí
+           No copy/paste mal, sin espacios
+
+ERROR: "GOOGLE_API_KEY not found"
+→ Solución: Verificar que agregaste GOOGLE_API_KEY
+           Revisar que el valor es correcto
+
+ERROR: "Connection refused"
+→ Solución: Esperar 2-3 minutos más (todavía iniciando)
+           Luego probar de nuevo
+
+ERROR: "Token invalid"
+→ Solución: Tu token de Telegram es incorrecto
+           Ir a @BotFather, generar nuevo token
+           Actualizar TELEGRAM_TOKEN en Railway
+           Railway auto-redeploy
+
+PROBLEMA 2: Deployment falló (Status en rojo)
+───────────────────────────────────────────────
+
+QUÉ HACER:
+  1. Click: "View Logs"
+  2. Buscar línea roja con ERROR
+  3. Leer mensaje
+  4. Hacer fix localmente:
+     - Editar archivo problema
+     - git commit
+     - git push origin main
+  5. Railway automáticamente redeploy
+
+PROBLEMA 3: CPU o Memory muy alto
+──────────────────────────────────
+
+QUÉ HACER:
+  1. En Railway → Settings
+  2. Ir a "Resources"
+  3. Aumentar RAM (de 512MB a 1GB)
+  4. Aumentar CPU (de 0.5 a 1.0)
+  5. Click: "Save"
+  6. Railway automáticamente reinicia con más recursos
+
+PROBLEMA 4: Bot responde lento (> 5 segundos)
+──────────────────────────────────────────────
+
+QUÉ HACER:
+  1. Revisar CPU en Monitoring (si está > 80%, aumentar recursos)
+  2. Revisar Logs para mensajes lentos
+  3. Contactar si persiste
+
+NECESITO DESHACER CAMBIOS:
+──────────────────────────
+
+EN RAILWAY:
+  1. Click: "Deployments"
+  2. Ver lista de versiones
+  3. Seleccionar versión anterior (última que funcionaba)
+  4. Click: "Rollback"
+  5. Railway vuelve a versión anterior automáticamente
+
+NECESITO HACER CAMBIOS EN EL CÓDIGO:
+────────────────────────────────────
+
+PASOS:
+  1. Editar archivo localmente (en tu PC)
+  2. Guardar cambios
+  3. git add .
+  4. git commit -m "Descripción del cambio"
+  5. git push origin main
+  6. Railway automáticamente detecta cambio
+  7. Redeploy automático (~2 minutos)
+  8. Bot actualizado
+
+================================================================================
+                    DESPUÉS DE LIVE (Operación diaria)
+================================================================================
+
+QUÉ REVISAR CADA DÍA:
+
+1. Ver Logs en Railway:
+   - Buscar "[ERROR]" en rojo
+   - Si no hay, todo bien
+   - Si hay, investigar
+
+2. Ver Métricas:
+   - CPU: debe ser < 20%
+   - Memory: debe ser < 30%
+   - Si sube mucho, aumentar recursos
+
+3. Probar Bot en Telegram:
+   - Enviar /start
+   - Debe responder en < 2 segundos
+   - Si no responde, revisar logs
+
+4. Revisar Alertas por Email:
+   - Railway te enviará alertas si algo falla
+   - Si recibes alerta, revisar inmediatamente
+
+QUÉ HACER SI ALGO FALLA:
+  1. Revisar Logs en Railway
+  2. Ver mensaje de error específico
+  3. Arreglar localmente
+  4. Git push
+  5. Railway auto-redeploy
+
+PARA HACER BACKUP:
+  Clone repositorio en otro lugar:
+  git clone https://github.com/TU_USUARIO/bot-analyst-ac.git backup/
+
+================================================================================
+                    ✅ RESUMEN VISUAL
+================================================================================
+
+TIMELINE:
+
+┌─ PASO 1: GitHub (5 min) ─────┐
+│ git add .                     │
+│ git commit                    │
+│ git push                      │
+└─────────────────────────────┘
+                │
+                ↓
+┌─ PASO 2: Railway (5 min) ────┐
+│ Crear cuenta en railway.app   │
+│ Autorizar GitHub              │
+└─────────────────────────────┘
+                │
+                ↓
+┌─ PASO 3: Proyecto (5 min) ───┐
+│ New Project                   │
+│ Deploy from GitHub            │
+│ Seleccionar bot-analyst-ac    │
+└─────────────────────────────┘
+                │
+                ↓
+┌─ PASO 4: Variables (10 min) ──┐
+│ Agregar 7 variables            │
+│ (TELEGRAM_TOKEN, etc.)         │
+└─────────────────────────────┘
+                │
+                ↓
+┌─ PASO 5: Deploy (10 min) ──────┐
+│ Click: Deploy                  │
+│ Esperar ~3-5 minutos           │
+│ Ver "[OK] Bot escuchando..."   │
+└─────────────────────────────┘
+                │
+                ↓
+┌─ PASO 6: Validar (5 min) ──────┐
+│ Abrir Telegram                 │
+│ /start                         │
+│ Bot responde ✓                 │
+└─────────────────────────────┘
+                │
+                ↓
+        ✅ LIVE EN PRODUCCIÓN
+        Bot 24/7 en Telegram
+        Monitoreo automático
+
+TOTAL TIEMPO: ~45 minutos
+
+================================================================================
+                    LISTO PARA EMPEZAR?
+================================================================================
+
+ANTES:
+  [ ] Verificar: python PRE_DEPLOYMENT_VALIDATION.py
+      Debe mostrar: "LISTO PARA DEPLOYMENT A RAILWAY"
+
+DURANTE:
+  [ ] Seguir CADA PASO exactamente
+  [ ] No saltar pasos
+  [ ] Si hay error, revisar TROUBLESHOOTING
+
+DESPUÉS:
+  [ ] Bot en Telegram funciona
+  [ ] Métricas en Railway se ven
+  [ ] Revisar diariamente
+
+PREGUNTAS?
+  - Lee GUIA_RAPIDA_DEPLOYMENT.md (resumen corto)
+  - Lee FASE_5C_PRODUCCION_PLAN.txt (más detallado)
+  - Contacta si necesitas ayuda
+
+¡ADELANTE CON EL DEPLOYMENT!
+
+================================================================================

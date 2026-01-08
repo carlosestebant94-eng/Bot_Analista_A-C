@@ -1,16 +1,17 @@
 """
 analisis/analyzer.py
 Motor de análisis - Realiza análisis basado en el conocimiento del bot
+Incluye caché y optimizaciones de performance
 """
 
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any
 from datetime import datetime
 
 
 class Analyzer:
     """Motor de análisis que utiliza el conocimiento del cerebro"""
     
-    def __init__(self, knowledge_manager=None):
+    def __init__(self, knowledge_manager: 'Any | None' = None):
         """
         Inicializa el analizador
         
@@ -19,10 +20,15 @@ class Analyzer:
         """
         self.knowledge_manager = knowledge_manager
         self.historial_analisis = []
+        self.cache_analisis = {}
+        self.cache_ttl = 3600  # 1 hora (estandarizado)
+        self.cache_expiry = {}
+        self.MAX_HISTORIAL = 1000  # PUNTO 1: Aumentado de 100 para mejor auditoría
+        self.CONOCIMIENTO_LIMIT = 8  # PUNTO 1: Aumentado de 3 para más contexto
     
     def analizar_datos(self, datos: Dict[str, Any], contexto: str = "") -> Dict[str, Any]:
         """
-        Realiza análisis de datos en tiempo real
+        Realiza análisis de datos en tiempo real con caché
         
         Args:
             datos: Diccionario con datos a analizar
@@ -31,6 +37,11 @@ class Analyzer:
         Returns:
             Resultado del análisis
         """
+        # Verificar cache
+        cache_key = self._generar_cache_key(datos, contexto)
+        if self._es_cache_valido(cache_key):
+            return self.cache_analisis[cache_key]
+        
         resultado = {
             "timestamp": datetime.now().isoformat(),
             "tipo_analisis": "analisis_datos",
@@ -42,10 +53,10 @@ class Analyzer:
             "fuentes_utilizadas": []
         }
         
-        # Buscar conocimiento relevante
+        # Buscar conocimiento relevante (PUNTO 1: aumentado a 8 de 3)
         if self.knowledge_manager:
             consulta = contexto or str(datos.keys())
-            conocimiento_relevante = self.knowledge_manager.buscar_conocimiento(consulta, limite=3)
+            conocimiento_relevante = self.knowledge_manager.buscar_conocimiento(consulta, limite=self.CONOCIMIENTO_LIMIT)
             
             resultado["fuentes_utilizadas"] = [k["tema"] for k in conocimiento_relevante]
             resultado["hallazgos"].append(f"Se encontraron {len(conocimiento_relevante)} fuentes relevantes")
@@ -58,17 +69,28 @@ class Analyzer:
         # Generar recomendaciones
         resultado["recomendaciones"] = self._generar_recomendaciones(datos, hallazgos)
         
-        # Registrar análisis
+        # Registrar análisis (sin bloquear)
         if self.knowledge_manager:
-            self.knowledge_manager.registrar_analisis(
-                tipo_analisis=resultado["tipo_analisis"],
-                entrada=resultado["entrada"],
-                resultado=str(resultado["hallazgos"]),
-                confianza=resultado["confianza"],
-                fuentes=resultado["fuentes_utilizadas"]
-            )
+            try:
+                self.knowledge_manager.registrar_analisis(
+                    tipo_analisis=resultado["tipo_analisis"],
+                    entrada=resultado["entrada"],
+                    resultado=str(resultado["hallazgos"]),
+                    confianza=resultado["confianza"],
+                    fuentes=resultado["fuentes_utilizadas"]
+                )
+            except Exception:
+                pass  # No bloquear si falla el registro
         
+        # Guardar en cache
+        self.cache_analisis[cache_key] = resultado
+        self.cache_expiry[cache_key] = datetime.now()
+        
+        # Guardar en historial (PUNTO 1: aumentado a 1000 para auditoría)
         self.historial_analisis.append(resultado)
+        if len(self.historial_analisis) > self.MAX_HISTORIAL:
+            self.historial_analisis.pop(0)
+        
         return resultado
     
     def _analizar_patrones(self, datos: Dict[str, Any]) -> Dict[str, Any]:
@@ -104,13 +126,28 @@ class Analyzer:
         # Análisis de promedio
         if isinstance(datos.get("valores"), list):
             valores = [v for v in datos["valores"] if isinstance(v, (int, float))]
-            if valores:
-                promedio = sum(valores) / len(valores)
+            if len(valores) > 1:
+                import numpy as np
+                promedio = np.mean(valores)
                 maximo = max(valores)
                 minimo = min(valores)
                 
                 hallazgos.append(f"Promedio: {promedio:.2f}, Máximo: {maximo}, Mínimo: {minimo}")
-                confianza = min(0.9, 0.5 + len(valores) * 0.05)
+                
+                # Confianza basada en variabilidad de datos (mejor que lineal)
+                desv_std = np.std(valores)
+                coef_variacion = desv_std / abs(promedio) if promedio != 0 else 1.0
+                
+                # Confianza inversamente proporcional a variabilidad
+                confianza_base = max(0.3, 1.0 - (coef_variacion * 0.3))
+                
+                # Aumentar con tamaño de muestra (saturación logarítmica para mejor scaling)
+                factor_tamaño = min(0.4, np.log10(len(valores) + 1) / 8)
+                confianza = min(0.95, confianza_base + factor_tamaño)
+            elif len(valores) == 1:
+                promedio = valores[0]
+                hallazgos.append(f"Valor único: {promedio:.2f}")
+                confianza = 0.4  # Muy baja confianza con un solo dato
         
         return {
             "hallazgos": hallazgos,
@@ -226,3 +263,23 @@ class Analyzer:
             "distribucion_por_tipo": tipos_analisis,
             "ultimo_analisis": self.historial_analisis[-1]["timestamp"]
         }
+    
+    def _generar_cache_key(self, datos: Dict[str, Any], contexto: str) -> str:
+        """Genera una clave de caché única"""
+        import hashlib
+        contenido = str(sorted(datos.items())) + contexto
+        return hashlib.md5(contenido.encode()).hexdigest()
+    
+    def _es_cache_valido(self, key: str) -> bool:
+        """Verifica si un cache es válido"""
+        if key not in self.cache_analisis or key not in self.cache_expiry:
+            return False
+        
+        tiempo_desde_cache = (datetime.now() - self.cache_expiry[key]).total_seconds()
+        return tiempo_desde_cache < self.cache_ttl
+    
+    def limpiar_cache(self) -> None:
+        """Limpia el caché de análisis"""
+        self.cache_analisis.clear()
+        self.cache_expiry.clear()
+

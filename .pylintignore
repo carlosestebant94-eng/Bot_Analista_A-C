@@ -1,0 +1,9 @@
+# Archivos a ignorar en Pylint
+test_*.py
+*_test.py
+demo_*.py
+*_demo.py
+venv_bot/
+.venv/
+__pycache__/
+*.egg-info/

@@ -4,17 +4,18 @@ Procesador de imágenes y gráficas
 Interpreta y analiza imágenes usando visión computacional
 """
 
+import numpy as np
+from PIL import Image
+from pathlib import Path
+from typing import Dict, List, Any, Optional, Tuple
+
 try:
     import cv2
-    import numpy as np
     CV2_AVAILABLE = True
 except ImportError:
     CV2_AVAILABLE = False
     print("⚠️  Advertencia: OpenCV no instalado. Funciones de visión limitadas.")
 
-from PIL import Image
-from pathlib import Path
-from typing import Dict, List, Any, Optional, Tuple
 try:
     import pytesseract
     TESSERACT_AVAILABLE = True

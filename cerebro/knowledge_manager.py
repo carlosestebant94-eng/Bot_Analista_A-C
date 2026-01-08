@@ -24,12 +24,35 @@ class KnowledgeManager:
         self.db_path = db_path
         os.makedirs(os.path.dirname(db_path), exist_ok=True)
         self.inicializar_bd()
+        
+        # Inicializar gestor de datos de mercado (lazy loading)
+        self.market_data = None
+    
+    def _obtener_market_data(self):
+        """Obtiene o inicializa el gestor de datos de mercado (lazy loading)"""
+        if self.market_data is None:
+            try:
+                from data_sources import MarketDataManager
+                self.market_data = MarketDataManager()
+            except Exception as e:
+                print(f"⚠️  No se pudo inicializar MarketDataManager: {e}")
+        return self.market_data
+    
+    @property
+    def market_data_property(self):
+        """Property para acceder al gestor de datos de mercado"""
+        return self._obtener_market_data()
     
     def inicializar_bd(self):
         """Inicializa la estructura de la base de datos"""
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
+            
+            # PRAGMA para optimización
+            cursor.execute("PRAGMA journal_mode = WAL")
+            cursor.execute("PRAGMA synchronous = NORMAL")
+            cursor.execute("PRAGMA cache_size = -64000")
             
             # Tabla de documentos
             cursor.execute('''
@@ -41,6 +64,12 @@ class KnowledgeManager:
                     fecha_carga TIMESTAMP,
                     contenido TEXT
                 )
+            ''')
+            
+            # Índices para documentos
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_documentos_nombre 
+                ON documentos(nombre)
             ''')
             
             # Tabla de conocimiento
@@ -56,6 +85,20 @@ class KnowledgeManager:
                 )
             ''')
             
+            # Índices para conocimiento (críticos para búsqueda)
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_conocimiento_tema 
+                ON conocimiento(tema)
+            ''')
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_conocimiento_relevancia 
+                ON conocimiento(relevancia DESC)
+            ''')
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_conocimiento_documento 
+                ON conocimiento(documento_id)
+            ''')
+            
             # Tabla de análisis realizados
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS analisis_realizados (
@@ -69,6 +112,16 @@ class KnowledgeManager:
                 )
             ''')
             
+            # Índices para análisis
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_analisis_tipo 
+                ON analisis_realizados(tipo_analisis)
+            ''')
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_analisis_fecha 
+                ON analisis_realizados(fecha_analisis)
+            ''')
+            
             # Tabla de aprendizaje
             cursor.execute('''
                 CREATE TABLE IF NOT EXISTS aprendizajes (
@@ -78,6 +131,12 @@ class KnowledgeManager:
                     valor TEXT,
                     fecha_aprendizaje TIMESTAMP
                 )
+            ''')
+            
+            # Índices para aprendizajes
+            cursor.execute('''
+                CREATE INDEX IF NOT EXISTS idx_aprendizajes_tipo 
+                ON aprendizajes(tipo)
             ''')
             
             conn.commit()
@@ -150,7 +209,7 @@ class KnowledgeManager:
             print(f"Error agregando conocimiento: {str(e)}")
             return False
     
-    def buscar_conocimiento(self, consulta: str, limite: int = 5) -> List[Dict]:
+    def buscar_conocimiento(self, consulta: str, limite: int = 5) -> List[Dict[str, Any]]:
         """
         Busca conocimiento relacionado con una consulta
         
@@ -273,3 +332,96 @@ class KnowledgeManager:
             print("Base de datos limpiada y reiniciada")
         except Exception as e:
             print(f"Error limpiando BD: {str(e)}")
+    
+    def guardar_analisis_screener(
+        self,
+        timeframe: str,
+        total_simbolos: int,
+        resultados_count: int,
+        simbolos_recomendados: List[str]
+    ) -> bool:
+        """
+        Guarda resultados del análisis de screener en la base de datos
+        
+        Args:
+            timeframe: Horizonte temporal (corto_plazo, mediano_plazo, largo_plazo)
+            total_simbolos: Total de símbolos analizados
+            resultados_count: Cantidad de resultados principales retornados
+            simbolos_recomendados: Lista de símbolos con mejores recomendaciones
+            
+        Returns:
+            True si fue exitoso
+        """
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            
+            valor = json.dumps({
+                'total_analizado': total_simbolos,
+                'resultados_principales': resultados_count,
+                'simbolos': simbolos_recomendados
+            })
+            
+            cursor.execute('''
+                INSERT INTO aprendizajes (tipo, descripcion, valor, fecha_aprendizaje)
+                VALUES (?, ?, ?, ?)
+            ''', (
+                'screener_resultado',
+                f'Screener automático - {timeframe}',
+                valor,
+                datetime.now().isoformat()
+            ))
+            
+            conn.commit()
+            conn.close()
+            return True
+            
+        except Exception as e:
+            print(f"Error guardando screener: {str(e)}")
+            return False
+    
+    def obtener_screener_historial(self, timeframe: Optional[str] = None, limite: int = 10) -> List[Dict]:
+        """
+        Obtiene historial de análisis screener
+        
+        Args:
+            timeframe: Filtrar por horizonte temporal (opcional)
+            limite: Cantidad máxima de resultados
+            
+        Returns:
+            Lista de análisis screener previos
+        """
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            
+            if timeframe:
+                cursor.execute('''
+                    SELECT descripcion, valor, fecha_aprendizaje FROM aprendizajes
+                    WHERE tipo = 'screener_resultado' AND descripcion LIKE ?
+                    ORDER BY fecha_aprendizaje DESC
+                    LIMIT ?
+                ''', (f'%{timeframe}%', limite))
+            else:
+                cursor.execute('''
+                    SELECT descripcion, valor, fecha_aprendizaje FROM aprendizajes
+                    WHERE tipo = 'screener_resultado'
+                    ORDER BY fecha_aprendizaje DESC
+                    LIMIT ?
+                ''', (limite,))
+            
+            resultados = []
+            for row in cursor.fetchall():
+                resultados.append({
+                    'descripcion': row[0],
+                    'datos': json.loads(row[1]),
+                    'fecha': row[2]
+                })
+            
+            conn.close()
+            return resultados
+            
+        except Exception as e:
+            print(f"Error obteniendo historial screener: {str(e)}")
+            return []
+

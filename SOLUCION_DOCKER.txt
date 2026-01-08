@@ -1,0 +1,150 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    SOLUCIÓN: EJECUTAR BOT EN DOCKER
+═══════════════════════════════════════════════════════════════════════════════
+
+PROBLEMA IDENTIFICADO:
+──────────────────────
+Anaconda Python instalado en C:\ProgramData\anaconda3 interfiere con el venv
+cuando intenta cargar módulos compilados (beautifulsoup4, pandas, numpy, etc).
+
+SOLUCIÓN: DOCKER
+────────────────
+Docker aísla completamente el entorno Python eliminando cualquier interferencia.
+
+═══════════════════════════════════════════════════════════════════════════════
+                        PASO 1: INSTALAR DOCKER
+═══════════════════════════════════════════════════════════════════════════════
+
+Opción A: Docker Desktop (RECOMENDADO)
+   1. Descargar: https://www.docker.com/products/docker-desktop
+   2. Instalar y ejecutar
+   3. Windows pedirá reiniciar
+
+Opción B: Verificar instalación existente
+   Abre PowerShell y ejecuta:
+   $ docker --version
+   
+   Si ves la versión, Docker ya está instalado.
+
+═══════════════════════════════════════════════════════════════════════════════
+                        PASO 2: CONSTRUIR LA IMAGEN
+═══════════════════════════════════════════════════════════════════════════════
+
+En PowerShell, desde el directorio del bot:
+
+$ cd 'C:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C'
+$ docker build -t bot-analista:latest .
+
+Esto creará una imagen Docker con:
+  ✅ Python 3.12 limpio (sin Anaconda)
+  ✅ Todos los requisitos instalados
+  ✅ Bot listo para ejecutar
+
+═══════════════════════════════════════════════════════════════════════════════
+                        PASO 3: EJECUTAR EL BOT
+═══════════════════════════════════════════════════════════════════════════════
+
+Opción A: Ejecución simple
+$ docker run --env-file .env bot-analista:latest
+
+Opción B: Con volúmenes para persistencia de datos
+$ docker run --env-file .env -v bot-data:/app/data bot-analista:latest
+
+Opción C: Con nombre personalizado
+$ docker run --name bot-analista --env-file .env bot-analista:latest
+
+═══════════════════════════════════════════════════════════════════════════════
+                        PASO 4: VERIFICAR QUE FUNCIONA
+═══════════════════════════════════════════════════════════════════════════════
+
+El bot debería mostrar:
+──────────────────────
+==================================================
+⚙️  CONFIGURACIÓN DEL BOT
+==================================================
+Base Directory: /app
+PDFs Directory: /app/pdfs
+...
+✅ Bot en funcionamiento. Presiona Ctrl+C para detener.
+==================================================
+
+Luego en Telegram:
+─────────────────
+1. Abre chat con el bot
+2. Escribe: /analizar AAPL
+3. Deberías ver análisis con tabla trading
+4. Escribe: /exportar_pdf
+5. Deberías recibir PDF profesional
+
+═══════════════════════════════════════════════════════════════════════════════
+                        COMANDOS ÚTILES DE DOCKER
+═══════════════════════════════════════════════════════════════════════════════
+
+Ver imágenes:
+$ docker images
+
+Ver contenedores corriendo:
+$ docker ps
+
+Ver logs del bot:
+$ docker logs bot-analista
+
+Detener bot:
+$ docker stop bot-analista
+
+Eliminar contenedor:
+$ docker rm bot-analista
+
+Reiniciar bot:
+$ docker restart bot-analista
+
+═══════════════════════════════════════════════════════════════════════════════
+                        SOLUCIÓN RÁPIDA (SIN DOCKER)
+═══════════════════════════════════════════════════════════════════════════════
+
+Si prefieres evitar Docker, opción nuclear:
+
+1. Desinstala Anaconda completamente:
+   - Ir a Configuración → Apps → Programas y características
+   - Buscar "Anaconda"
+   - Desinstalar
+
+2. Reinstala Python limpio:
+   - Descargar: https://www.python.org/downloads/
+   - Elegir versión 3.12.x
+   - Al instalar MARCAR: "Add Python to PATH"
+
+3. Luego:
+   $ cd Bot_Analist_A&C
+   $ python -m venv venv_bot
+   $ .\venv_bot\Scripts\activate
+   $ pip install -r requirements.txt
+   $ python main.py
+
+═══════════════════════════════════════════════════════════════════════════════
+                        CUÁL ELEGIR?
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ DOCKER (RECOMENDADO):
+   • Fácil: Solo 2 comandos
+   • Limpio: Ambiente aislado
+   • Portable: Funciona igual en cualquier máquina
+   • Producción: Estándar de la industria
+
+❌ Desinstalar Anaconda:
+   • Arriesgado: Podría romper otros programas
+   • Laborioso: Requiere reinstalar Python.org
+   • Menos profesional: Solo para desarrollo local
+
+═══════════════════════════════════════════════════════════════════════════════
+                        PRUEBA DOCKER AHORA
+═══════════════════════════════════════════════════════════════════════════════
+
+Ejecuta en PowerShell (como administrador):
+
+$ docker build -t bot-analista:latest 'C:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C'
+$ docker run --env-file 'C:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\.env' bot-analista:latest
+
+El bot debería iniciar correctamente en ~30 segundos.
+
+═══════════════════════════════════════════════════════════════════════════════

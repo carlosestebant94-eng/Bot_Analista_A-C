@@ -1,0 +1,349 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                     QUICK REFERENCE - GEMINI v2.0                           ║
+║                    Guía Rápida de Uso y Referencia                          ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════════════════════
+⚡ USO RÁPIDO
+═══════════════════════════════════════════════════════════════════════════════
+
+MÉTODO 1: Análisis Profesional (RECOMENDADO)
+─────────────────────────────────────────────
+    resultado = ai_engine.analizar_ticker_profesional(
+        ticker="AAPL",
+        datos_tecnicos={...},
+        datos_fundamentales={...},
+        datos_macro={...},
+        contexto_conocimiento="..."
+    )
+    
+    Retorna: Reporte Markdown con tabla, veredicto, plan
+
+MÉTODO 2: Razonamiento Profesional
+───────────────────────────────────
+    resultado = ai_engine.razonar(
+        pregunta="¿Debería comprar AAPL?",
+        temperatura=0.2,
+        usar_instruccion_maestra=True
+    )
+    
+    Retorna: Respuesta determinista y profesional
+
+MÉTODO 3: Análisis de Datos (Flexible)
+──────────────────────────────────────
+    resultado = ai_engine.analizar_datos(
+        datos={...},
+        contexto="...",
+        tipo_analisis="tecnico",
+        usar_instruccion_maestra=True
+    )
+    
+    Retorna: Análisis con hallazgos y recomendaciones
+
+═══════════════════════════════════════════════════════════════════════════════
+📊 PARÁMETROS CLAVE
+═══════════════════════════════════════════════════════════════════════════════
+
+TEMPERATURA:
+    0.0-0.2: DETERMINISTA (recomendado para análisis)
+    0.3-0.5: BALANCEADO
+    0.6-1.0: CREATIVO
+
+usar_instruccion_maestra:
+    True:  Análisis PROFESIONAL (determinista, binario)
+    False: Análisis ESTÁNDAR (más flexible)
+
+modelo:
+    "gemini-2.5-pro": Mejor calidad, menos cuota (2 req/min)
+    "gemini-1.5-flash": Más rápido, más cuota
+
+═══════════════════════════════════════════════════════════════════════════════
+🎯 VEREDICTOS POSIBLES
+═══════════════════════════════════════════════════════════════════════════════
+
+COMPRA
+├─ Recomendación: Entrar en posición larga
+├─ Entry: Precio especificado
+├─ Stop Loss: Nivel de protección
+└─ Target: Objetivo de precio
+
+VENTA
+├─ Recomendación: Entrar en posición corta
+├─ Entry: Precio especificado
+├─ Stop Loss: Nivel de protección
+└─ Target: Objetivo de precio
+
+ESPERA / HOLD
+├─ Recomendación: No actuar
+├─ Motivo: Earnings próximos, falta claridad, evento macro
+└─ Acción: Esperar más confirmaciones
+
+═══════════════════════════════════════════════════════════════════════════════
+📈 NIVELES DE CONFIANZA
+═══════════════════════════════════════════════════════════════════════════════
+
+ALTO (80-100%)
+└─ 3+ confirmaciones (técnica, fundamental, macro)
+└─ Sin eventos próximos
+└─ Alto grado de certeza
+
+MEDIO (50-79%)
+└─ 2 confirmaciones
+└─ Algunos eventos próximos
+└─ Confianza moderada
+
+BAJO (20-49%)
+└─ 1 confirmación
+└─ Múltiples factores contradictorios
+└─ Baja certeza
+
+MUY BAJO (<20%)
+└─ Datos insuficientes
+└─ Máximas contradicciones
+└─ No recomendable actuar
+
+═══════════════════════════════════════════════════════════════════════════════
+🔍 ANÁLISIS TÉCNICO BINARIO
+═══════════════════════════════════════════════════════════════════════════════
+
+DIVERGENCIA ALCISTA:
+├─ Precio hace Mínimo Más Bajo (LL) ✓
+├─ Oscilador hace Mínimo Más Alto (HL) ✓
+├─ RESULTADO: SÍ es divergencia alcista
+└─ Si no cumple ambas: NO es divergencia
+
+SOBREVENTA:
+├─ RSI < 30 → Sobreventa (posible rebote)
+├─ Stochastic < 20 → Sobreventa
+└─ Signal: Potencial reversión
+
+SOBRECOMPRA:
+├─ RSI > 70 → Sobrecompra (posible corrección)
+├─ Stochastic > 80 → Sobrecompra
+└─ Signal: Potencial reversión
+
+TENDENCIA:
+├─ Precio > SMA → Tendencia alcista
+├─ Precio < SMA → Tendencia bajista
+└─ Precio = SMA → Neutral
+
+═══════════════════════════════════════════════════════════════════════════════
+⚙️ CONFIGURACIÓN RECOMENDADA
+═══════════════════════════════════════════════════════════════════════════════
+
+PARA ANÁLISIS PROFESIONAL:
+──────────────────────────
+    ai_engine.analizar_ticker_profesional(
+        ticker=ticker,
+        datos_tecnicos=datos_tech,
+        datos_fundamentales=datos_fund,
+        datos_macro=datos_macro,
+        contexto_conocimiento=principios_libros
+    )
+    
+    ├─ Temperatura: 0.2 (automático)
+    ├─ Instrucción Maestra: Activada (automático)
+    ├─ top_k: 20 (automático)
+    └─ max_tokens: 3000 (automático)
+
+PARA RAZONAMIENTO PROFESIONAL:
+──────────────────────────────
+    ai_engine.razonar(
+        pregunta="¿Señal de compra?",
+        temperatura=0.2,
+        usar_instruccion_maestra=True
+    )
+    
+    ├─ Temperatura: 0.2 (determinista)
+    ├─ Instrucción Maestra: True (profesional)
+    ├─ top_p: 0.9
+    └─ max_tokens: 3000
+
+PARA MODO FLEXIBLE:
+───────────────────
+    ai_engine.razonar(
+        pregunta="...",
+        temperatura=0.7,
+        usar_instruccion_maestra=False
+    )
+    
+    ├─ Temperatura: 0.7 (creativo)
+    ├─ Instrucción Maestra: False (estándar)
+    └─ Más flexible, conversacional
+
+═══════════════════════════════════════════════════════════════════════════════
+🐛 TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+ERROR: 429 (Cuota excedida)
+────────────────────────────
+Síntoma: "You exceeded your current quota"
+Causa: Demasiadas solicitudes en poco tiempo
+Solución:
+  1. Espera 5-8 segundos
+  2. Usa gemini-1.5-flash (más cuota)
+  3. Actualiza a plan pago
+
+ERROR: API Key inválida
+─────────────────────────
+Síntoma: "API key not valid"
+Causa: GOOGLE_API_KEY no configurada o expirada
+Solución:
+  1. Verifica .env tiene: GOOGLE_API_KEY=tu_clave
+  2. Obtén nueva clave: https://ai.google.dev
+  3. Reinicia el bot
+
+ERROR: Modelo no disponible
+────────────────────────────
+Síntoma: "Model not found"
+Causa: Nombre de modelo incorrecto
+Solución:
+  1. Usa: gemini-1.5-flash o gemini-2.5-pro
+  2. Verifica config/settings.py
+  3. Reinicia el bot
+
+ERROR: Timeout
+──────────────
+Síntoma: "Request timed out"
+Causa: Solicitud tardó demasiado
+Solución:
+  1. Intenta pregunta más corta
+  2. Usa gemini-1.5-flash (más rápido)
+  3. Espera 5 segundos y reintenta
+
+═══════════════════════════════════════════════════════════════════════════════
+📝 EJEMPLO COMPLETO
+═══════════════════════════════════════════════════════════════════════════════
+
+from ia.ai_engine import AIEngine
+
+# Inicializar
+ai_engine = AIEngine()
+
+# Datos
+datos_tech = {
+    "Precio Actual": "$228.55",
+    "RSI(14)": "62.5",
+    "MACD": "Cruce alcista"
+}
+
+datos_fund = {
+    "P/E Ratio": "32.5",
+    "Market Cap": "$3.2T"
+}
+
+datos_macro = {
+    "VIX": "14.5",
+    "Fed Rate": "5.25-5.50%"
+}
+
+# Analizar
+resultado = ai_engine.analizar_ticker_profesional(
+    ticker="AAPL",
+    datos_tecnicos=datos_tech,
+    datos_fundamentales=datos_fund,
+    datos_macro=datos_macro
+)
+
+# Mostrar
+print(resultado["respuesta"])
+
+# Salida esperada:
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ## 📊 REPORTE ANALÍTICO: AAPL
+# 
+# ### 1. 🚦 VEREDICTO DEL ALGORITMO
+# * **Señal Maestra:** COMPRA
+# * **Confianza:** Alto (85%)
+# ...
+# [Resto de reporte]
+
+═══════════════════════════════════════════════════════════════════════════════
+📚 REFERENCIA DE ARCHIVOS
+═══════════════════════════════════════════════════════════════════════════════
+
+Código:
+├─ ia/ai_engine.py
+│  ├─ Clase AIEngine (actualizada)
+│  ├─ Método analizar_ticker_profesional()
+│  ├─ Método razonar()
+│  └─ Instrucción Maestra Profesional
+
+Documentación:
+├─ GEMINI_PROFESIONAL_v2.md (técnica)
+├─ RESUMEN_EJECUTIVO_AIEngine_v2.txt (ejecutivo)
+├─ VISUAL_AIEngine_v2.txt (visual)
+├─ CONCLUSION_GEMINI_v2.txt (conclusión)
+└─ QUICK_REFERENCE.txt (este archivo)
+
+Ejemplos:
+├─ test_gemini_profesional.py (tests)
+└─ ejemplo_integracion_gemini_v2.py (integración)
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+Antes de usar en producción:
+
+□ AIEngine v2.0 instalado (ia/ai_engine.py actualizado)
+□ GOOGLE_API_KEY configurado en .env
+□ test_gemini_profesional.py ejecutado exitosamente
+□ Integración en bot telegram completada
+□ Pruebas con /analizar AAPL exitosas
+□ Markdown se visualiza correctamente en Telegram
+□ Veredictos binarios funcionando (COMPRA/VENTA/ESPERA)
+□ Plan de acción mostrado correctamente (Entry/Stop/Target)
+□ Confianza mostrada con porcentaje
+□ Tabla técnica con valores precisos
+□ Backtesting iniciado para validación
+
+═══════════════════════════════════════════════════════════════════════════════
+🎓 TIPS Y TRUCOS
+═══════════════════════════════════════════════════════════════════════════════
+
+TIP 1: Reproducibilidad
+└─ Guarda entrada + salida para backtesting
+└─ Misma entrada = Misma salida (verificable)
+
+TIP 2: Contexto es clave
+└─ Más contexto = Mejor análisis
+└─ Siempre incluir principios de libros
+
+TIP 3: Temperatura para casos específicos
+└─ 0.1-0.2: Máxima reproducibilidad
+└─ 0.3-0.5: Balanceado
+└─ 0.7+: Más creativo (usa sin instrucción maestra)
+
+TIP 4: Validación de eventos
+└─ Incluir siempre Earnings próximos
+└─ Incluir Fed meetings, datos económicos
+└─ Sistema anula automáticamente si evento < 5 días
+
+TIP 5: Datos precisos
+└─ Precios en tiempo real vs EOD
+└─ Volumen actualizado
+└─ Indicadores calculados correctamente
+
+═══════════════════════════════════════════════════════════════════════════════
+📞 SOPORTE
+═══════════════════════════════════════════════════════════════════════════════
+
+Documentación completa: GEMINI_PROFESIONAL_v2.md
+Ejemplos prácticos: ejemplo_integracion_gemini_v2.py
+Guía visual: VISUAL_AIEngine_v2.txt
+Conclusión: CONCLUSION_GEMINI_v2.txt
+
+Para debugging:
+1. Revisa los logs (logging configurado)
+2. Ejecuta test_gemini_profesional.py
+3. Verifica GOOGLE_API_KEY en .env
+4. Intenta con diferentes temperaturas
+
+═══════════════════════════════════════════════════════════════════════════════
+
+VERSIÓN: 2.0
+FECHA: 27 de Noviembre, 2025
+ESTADO: ✅ PRODUCCIÓN
+
+═══════════════════════════════════════════════════════════════════════════════

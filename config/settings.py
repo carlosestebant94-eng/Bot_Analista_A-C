@@ -87,7 +87,7 @@ class Settings:
     def mostrar_configuracion(cls):
         """Muestra la configuración actual (sin datos sensibles)"""
         print("=" * 50)
-        print("⚙️  CONFIGURACIÓN DEL BOT")
+        print("[*] CONFIGURACION DEL BOT")
         print("=" * 50)
         print(f"Base Directory: {cls.BASE_DIR}")
         print(f"PDFs Directory: {cls.PDFS_DIR}")
@@ -95,6 +95,6 @@ class Settings:
         print(f"Logs Directory: {cls.LOGS_DIR}")
         print(f"Database: {cls.DATABASE_PATH}")
         print(f"Log Level: {cls.LOG_LEVEL}")
-        print(f"Telegram Token: {'✓ Configurado' if cls.TELEGRAM_TOKEN else '✗ No configurado'}")
-        print(f"Google AI (Gemini): {'✓ Configurado' if cls.GOOGLE_API_KEY else '✗ No configurado'}")
+        print(f"Telegram Token: {'OK - Configurado' if cls.TELEGRAM_TOKEN else 'ERROR - No configurado'}")
+        print(f"Google AI (Gemini): {'OK - Configurado' if cls.GOOGLE_API_KEY else 'ERROR - No configurado'}")
         print("=" * 50)

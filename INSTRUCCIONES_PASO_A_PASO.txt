@@ -1,0 +1,400 @@
+═══════════════════════════════════════════════════════════════════════════════
+              INSTRUCCIONES PASO A PASO - DESINSTALACIÓN COMPLETA
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 OBJETIVO:
+   Desinstalar Anaconda completamente
+   Instalar Python limpio
+   Configurar Spyder sin Anaconda
+   Iniciar el bot sin conflictos
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PASO 1: DESINSTALAR ANACONDA LIMPIAMENTE
+═══════════════════════════════════════════════════════════════════════════════
+
+⏱️  Tiempo estimado: 15 minutos (incluye reinicio de 30 segundos)
+
+INSTRUCCIONES:
+
+1. 🔓 Abre PowerShell como ADMINISTRADOR:
+   
+   a) Presiona: WIN + X (juntas)
+   b) Selecciona: Windows PowerShell (Administrador)
+   c) Haz clic en "Sí" si aparece una ventana de confirmación
+
+2. 📝 Copia este comando COMPLETO:
+
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; & 'c:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\1_DESINSTALAR_ANACONDA.ps1'
+
+3. 📌 Pégalo en PowerShell:
+   
+   a) Click derecho en la ventana
+   b) Pega el comando
+   c) Presiona ENTER
+
+4. 👁️  Observa el progreso:
+   
+   El script mostrará:
+   ✅ Deteniendo procesos Python
+   ✅ Creando backup
+   ✅ Desinstalando Anaconda
+   ✅ Eliminando carpetas
+   ✅ Limpiando variables de entorno
+   ✅ Limpiando accesos directos
+   ✅ Limpiando registro
+
+5. 🔄 Reinicia Windows:
+   
+   • El script te pedirá presionar Enter
+   • Te mostrará: "Reiniciando en 30 segundos..."
+   • Windows se reiniciará automáticamente
+   • ⏰ Espera a que se reinicie (tarda ~1 minuto)
+
+6. ✅ Verificación post-reinicio:
+   
+   Abre PowerShell y ejecuta:
+   
+   conda --version
+   
+   Debe mostrar error: "conda no reconocido"
+   (Eso es bueno, significa que Anaconda fue eliminado)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PASO 2: INSTALAR PYTHON LIMPIO
+═══════════════════════════════════════════════════════════════════════════════
+
+⏱️  Tiempo estimado: 10 minutos
+
+INSTRUCCIONES:
+
+1. 🔓 Abre PowerShell como ADMINISTRADOR (después del reinicio):
+   
+   WIN + X → Windows PowerShell (Administrador)
+
+2. 📝 Copia y ejecuta:
+
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; & 'c:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\2_INSTALAR_PYTHON.ps1'
+
+3. 📥 El script descargará Python:
+   
+   • Descargará: Python 3.12.7 (~30 MB)
+   • Mostrará: "Instalando Python..."
+   • Se abrirá un INSTALADOR VISUAL
+
+4. ⚠️  EN EL INSTALADOR (IMPORTANTE):
+   
+   DEBES MARCAR ESTAS OPCIONES:
+   
+   ☑️  "Add Python X.X to PATH" 
+       (abajo a la izquierda del instalador)
+   
+   ☑️  "Install pip"
+       (debe estar marcado por defecto)
+   
+   Luego: Click "Install Now"
+
+5. ⏳ Espera a que termine:
+   
+   • Mostrará: "Setup was successful"
+   • Click "Close"
+   • PowerShell continuará verificando
+
+6. ✅ Verificación:
+   
+   El script ejecutará automáticamente:
+   
+   python --version
+   
+   Debe mostrar: Python 3.12.7
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PASO 3: INSTALAR SPYDER (IDE DE ANÁLISIS)
+═══════════════════════════════════════════════════════════════════════════════
+
+⏱️  Tiempo estimado: 10 minutos
+
+¿QUÉ ES SPYDER?
+   IDE (editor) para análisis de datos
+   Lo que era Anaconda Navigator
+   Pero funciona SIN depender de Anaconda
+
+
+INSTRUCCIONES:
+
+1. 🔓 Abre PowerShell (normal, NO como admin):
+   
+   WIN + X → Windows PowerShell
+
+2. 📝 Copia y ejecuta:
+
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; & 'c:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\3_INSTALAR_SPYDER_STANDALONE.ps1'
+
+3. 📦 El script instalará:
+   
+   ✓ Spyder (IDE)
+   ✓ NumPy (cálculos)
+   ✓ Pandas (análisis de datos)
+   ✓ Matplotlib (gráficos)
+   ✓ Scikit-learn (machine learning)
+   ✓ Jupyter (notebooks)
+   ✓ IPython (shell interactivo)
+
+4. ⏳ Espera:
+   
+   • Mostrará: "Instalando: spyder..."
+   • Mostrará: "Instalando: numpy..."
+   • Etc...
+   • Esto tarda 5-10 minutos
+   • ⚠️  NO INTERRUMPAS EL PROCESO
+
+5. ✅ Cuando termine:
+   
+   Mostrará:
+   ✓ Spyder verificado
+   ✓ Acceso directo creado
+   ✓ Script INICIAR_SPYDER.bat creado
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PASO 4: INICIAR Y CONFIGURAR EL BOT
+═══════════════════════════════════════════════════════════════════════════════
+
+⏱️  Tiempo estimado: 10 minutos
+
+INSTRUCCIONES:
+
+1. 🔓 Abre PowerShell (normal):
+   
+   WIN + X → Windows PowerShell
+
+2. 📝 Copia y ejecuta:
+
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; & 'c:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C\4_INICIAR_BOT.ps1'
+
+3. 🔄 El script hará automáticamente:
+   
+   ✓ Crear venv (entorno aislado del bot)
+   ✓ Instalar dependencias (pandas, telegram, etc)
+   ✓ Instalar ReportLab (para PDF)
+   ✓ Crear directorios (logs, data, etc)
+   ✓ Crear archivo .env
+   ✓ Verificar módulos
+
+4. 📋 Cuando termine, verás un MENÚ:
+   
+   1️⃣  Iniciar el Bot ahora
+   2️⃣  Abrir editor de .env
+   3️⃣  Crear script automático
+   4️⃣  Mostrar instrucciones
+   5️⃣  Salir
+   
+   Selecciona: 2️⃣  (para editar credenciales)
+
+5. 📝 EDITAR .env (IMPORTANTE):
+   
+   Se abrirá un editor (Notepad)
+   
+   Verás:
+   GEMINI_API_KEY=tu_clave_api_aqui
+   TELEGRAM_BOT_TOKEN=tu_token_de_telegram_aqui
+   TELEGRAM_CHAT_ID=tu_chat_id_aqui
+   
+   REEMPLAZA los valores:
+   
+   a) GEMINI_API_KEY:
+      • Visita: https://aistudio.google.com/app/apikey
+      • Click "Create API Key"
+      • Copia la clave
+      • Pega aquí
+   
+   b) TELEGRAM_BOT_TOKEN:
+      • Abre Telegram
+      • Busca: @BotFather
+      • Envía: /newbot
+      • Sigue las instrucciones
+      • Copia el token que te da
+      • Pega aquí
+   
+   c) TELEGRAM_CHAT_ID:
+      • Envía cualquier mensaje a tu bot
+      • Abre: https://api.telegram.org/botTOKEN/getUpdates
+      • Reemplaza TOKEN con tu token real
+      • Busca: "chat" → "id"
+      • Copia ese número
+      • Pega aquí
+
+6. 💾 Guarda el archivo:
+   
+   Ctrl + S
+
+7. 🔙 Vuelve a PowerShell y presiona Enter
+
+8. 🚀 El script ofrece opciones:
+   
+   Selecciona: 1️⃣  (Iniciar Bot ahora)
+   
+   Verás:
+   Esperando comandos de Telegram...
+   
+   ¡El bot está en línea!
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PASO 5: PROBAR EL BOT
+═══════════════════════════════════════════════════════════════════════════════
+
+Abre Telegram:
+
+1. Busca tu bot (por el nombre que le diste en Paso 4.5b)
+
+2. Envía un comando:
+   
+   /ayuda    (muestra lista de comandos)
+   /analizar AAPL    (analiza Apple)
+   /exportar_pdf    (exporta análisis a PDF)
+
+3. Si responde: ✅ El bot está funcionando correctamente
+
+4. Si NO responde:
+   • Revisa el archivo .env: ¿están correctas todas las credenciales?
+   • Revisa si el bot sigue corriendo en PowerShell
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PRÓXIMOS REINICIAMIENTOS (FUTURO)
+═══════════════════════════════════════════════════════════════════════════════
+
+Para iniciar el bot en el futuro, tienes 2 opciones:
+
+OPCIÓN A: Doble clic en batch (MÁS SIMPLE):
+   1. Vuelve a ejecutar el paso 4 con opción 3️⃣
+   2. Se creará INICIAR_BOT.bat
+   3. En futuro, solo doble clic en ese archivo
+   4. El bot se abre en una ventana
+
+OPCIÓN B: PowerShell:
+   1. cd 'C:\Users\sk894\OneDrive\Carlos\OneDrive\Escritorio\Bot_Analist_A&C'
+   2. .\venv_bot\Scripts\activate
+   3. python main.py
+
+
+═══════════════════════════════════════════════════════════════════════════════
+USAR SPYDER EN EL FUTURO
+═══════════════════════════════════════════════════════════════════════════════
+
+Tienes 3 formas:
+
+1️⃣  Doble clic en: INICIAR_SPYDER.bat
+    (Se abre Spyder IDE)
+
+2️⃣  En Inicio:
+    Búsqueda → "Spyder (sin Anaconda)" → Enter
+    (Se abre Spyder IDE)
+
+3️⃣  Desde PowerShell:
+    python -m spyder
+
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ CHECKLIST FINAL
+═══════════════════════════════════════════════════════════════════════════════
+
+Después de completar los 4 pasos:
+
+☑️  Anaconda no existe en el sistema
+☑️  Python.org está instalado (python --version funciona)
+☑️  Spyder funciona
+☑️  venv_bot existe
+☑️  Archivo .env completado con credenciales
+☑️  Bot inicia sin errores
+☑️  Bot responde a comandos en Telegram
+☑️  Comandos como /analizar funcionan
+☑️  Exportación PDF funciona
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🆘 PROBLEMAS COMUNES Y SOLUCIONES
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ "python no se encuentra" después de instalar Python
+──────────────────────────────────────────────────────
+Solución:
+   1. Cierra PowerShell completamente
+   2. Abre una PowerShell NUEVA
+   3. Intenta de nuevo: python --version
+   
+   (Las variables de entorno se actualizan al abrir PowerShell)
+
+
+❌ En el instalador de Python (Paso 2), no veo la opción "Add Python to PATH"
+──────────────────────────────────────────────────────────────────────────────
+Solución:
+   1. Desinstalalo
+   2. Ejecuta de nuevo el script 2_INSTALAR_PYTHON.ps1
+   3. En el instalador, busca la opción ABAJO a la IZQUIERDA
+
+
+❌ "ModuleNotFoundError" cuando inicio el bot
+───────────────────────────────────────────
+Solución:
+   1. .\venv_bot\Scripts\activate
+   2. python -m pip install -r requirements.txt
+   3. python main.py
+
+
+❌ El bot no responde en Telegram
+──────────────────────────────────
+Soluciones (en orden):
+   1. ¿Están correctas todas las credenciales en .env?
+   2. ¿El bot sigue corriendo en PowerShell? (mira la ventana)
+   3. ¿Copiaste bien el CHAT_ID? (sin espacios)
+   4. Espera 30 segundos después de cambiar .env
+   5. Cierra PowerShell y reinicia el bot
+
+
+❌ Spyder no inicia
+───────────────────
+Solución:
+   1. PowerShell
+   2. python -m spyder
+   
+   Si falla:
+   1. .\venv_bot\Scripts\activate
+   2. python -m pip install --upgrade spyder pyqt5
+   3. python -m spyder
+
+
+❌ Necesito desinstalar Spyder
+──────────────────────────────
+Solución:
+   1. PowerShell
+   2. python -m pip uninstall spyder pyqt5 -y
+   3. python -m pip install spyder pyqt5
+   
+   (O simplemente no lo uses)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📞 SI ALGO FALLA
+═══════════════════════════════════════════════════════════════════════════════
+
+1. 📸 Captura una screenshot del error
+2. 📝 Copia TODO el texto del error
+3. 🔄 Intenta de nuevo con un PowerShell NUEVO
+4. 📂 Revisa el archivo: logs/bot.log (si existe)
+5. 🗑️  Borra venv_bot y vuelve a crear (última opción):
+   Remove-Item -Path venv_bot -Recurse -Force
+   python -m venv venv_bot
+   .\venv_bot\Scripts\activate
+   python -m pip install -r requirements.txt
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+¡LISTO! Después de completar estos 4 pasos estarás 100% libre de Anaconda
+y el bot funcionará perfectamente.
+
+═══════════════════════════════════════════════════════════════════════════════

@@ -11,10 +11,14 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from config import Settings
 from telegram_bot import TelegramAnalystBot
+from logging_audit import setup_centralized_logging
 
 
 def main():
     """Función principal"""
+    
+    # Inicializar logging centralizado (Phase 5A Integration)
+    setup_centralized_logging("BotAnalystMain", "INFO")
     
     # Crear directorios
     Settings.crear_directorios()
@@ -24,7 +28,7 @@ def main():
     
     # Validar configuración
     if not Settings.validar_configuracion():
-        print("❌ Configuración incompleta. Revisa el archivo .env")
+        print("[ERROR] Configuracion incompleta. Revisa el archivo .env")
         return
     
     # Inicializar bot
@@ -32,9 +36,9 @@ def main():
         bot = TelegramAnalystBot()
         bot.iniciar()
     except KeyboardInterrupt:
-        print("\n\n👋 Bot detenido por el usuario")
+        print("\n\n[INFO] Bot detenido por el usuario")
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print(f"[ERROR] Error: {str(e)}")
         raise
 
 

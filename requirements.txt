@@ -4,7 +4,7 @@ google-generativeai==0.8.5
 pillow==10.4.0
 pandas==2.3.3
 pytesseract==0.3.13
-opencv-python==4.8.1.78
+opencv-python-headless
 python-dotenv==1.0.1
 numpy==1.26.4
 requests==2.31.0
@@ -17,3 +17,4 @@ scikit-learn==1.7.2
 reportlab==4.0.4
 pandas-datareader==0.10.0
 scipy==1.13.1
+flask

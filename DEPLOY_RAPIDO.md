@@ -14,10 +14,8 @@ Regístrate con GitHub (recomendado)
 3. Conecta tu repositorio o sube ZIP
 
 ### Paso 3: Configurar variables de entorno
-En el dashboard de Railway, agrega estas variables:
-```
-TELEGRAM_TOKEN=8065924513:AAHcI033x83E9r2fztwWJ-EFMdgUWj4ARJI
-GOOGLE_API_KEY=AIzaSyCMXs2CGhTgnFB6bHMxB3aDWXCH_dnDn7Y
+En el dashboard de Railway, agrega estas r2fztwWJ-EFMdgUWj4ARJI
+MxB3aDWXCH_dnDn7Y
 LOG_LEVEL=INFO
 ```
 

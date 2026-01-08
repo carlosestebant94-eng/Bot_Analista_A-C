@@ -112,7 +112,7 @@ GOOGLE_API_KEY = <tu_api_key_aqui>
 6. Pégalo en Railway
 ```
 
-**Resultado:** Token como: `8180362199:AAFDWjpNRK8_Zh8JdNHVYimipq9nVxmcd1E`
+**Resultado:** Token como: `xmcd1E`
 
 ### 2️⃣ GOOGLE_API_KEY
 
@@ -125,7 +125,7 @@ GOOGLE_API_KEY = <tu_api_key_aqui>
 5. Pégala en Railway
 ```
 
-**Resultado:** API Key como: `AIzaSyDrZn9goK6CLrMW7_Aic4sLIFGkyM5FH0g`
+**Resultado:** API Key como:
 
 ---
 

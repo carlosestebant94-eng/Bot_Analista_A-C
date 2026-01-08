@@ -2,6 +2,7 @@
 main.py
 Punto de entrada principal del Bot Analista A&C
 """
+from keep_alive import keep_alive
 
 import sys
 from pathlib import Path
@@ -39,4 +40,6 @@ def main():
 
 
 if __name__ == "__main__":
+    keep_alive()
+    print("Iniciando servidor web falso...")
     main()

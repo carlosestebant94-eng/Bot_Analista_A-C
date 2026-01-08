@@ -2,6 +2,7 @@
 data_sources/market_data.py
 Gestor unificado de datos de mercado
 Fuentes: YFinance (principal) + Finviz (enriquecimiento) + Polygon.io + Alpha Vantage (fallbacks)
+Con Rate Limiting y Caché para prevenir errores de "Too Many Requests"
 """
 
 import logging
@@ -10,6 +11,9 @@ import pandas as pd
 from typing import Dict, Optional, Any, List
 from datetime import datetime, timedelta
 import socket
+import time
+import threading
+from collections import defaultdict
 
 # ESTABLECER TIMEOUT GLOBAL PARA YFINANCE
 socket.setdefaulttimeout(15)
@@ -23,6 +27,13 @@ except ImportError:
 
 class MarketDataManager:
     """Gestor centralizado de datos de mercado en tiempo real"""
+    
+    # CLASE - Rate Limiter para prevenir "Too Many Requests"
+    _rate_limit_lock = threading.Lock()
+    _last_request_time = {}  # {ticker: timestamp}
+    _request_cache = {}  # {ticker: (data, timestamp)}
+    _cache_ttl_seconds = 60  # Cachear por 60 segundos
+    _min_request_interval = 0.5  # Mínimo 500ms entre solicitudes al mismo ticker
     
     def __init__(
         self,
@@ -49,12 +60,68 @@ class MarketDataManager:
             except Exception as e:
                 self.logger.warning(f"[WARNING] No se pudo inicializar Finviz: {str(e)}")
         
-        self.logger.info("[OK] Gestor de datos inicializado")
+        self.logger.info("[OK] Gestor de datos inicializado con Rate Limiting")
+    
+    @classmethod
+    def _aplicar_rate_limit(cls, ticker: str) -> None:
+        """
+        Aplica rate limiting para evitar 'Too Many Requests'
+        Espera si es necesario para respetar el intervalo mínimo
+        
+        Args:
+            ticker: Símbolo del ticker
+        """
+        with cls._rate_limit_lock:
+            ahora = time.time()
+            ultima_solicitud = cls._last_request_time.get(ticker, 0)
+            tiempo_transcurrido = ahora - ultima_solicitud
+            
+            if tiempo_transcurrido < cls._min_request_interval:
+                tiempo_espera = cls._min_request_interval - tiempo_transcurrido
+                logging.getLogger("MarketDataManager").debug(
+                    f"⏱️  Rate limit: Esperando {tiempo_espera:.2f}s para {ticker}"
+                )
+                time.sleep(tiempo_espera)
+            
+            cls._last_request_time[ticker] = time.time()
+    
+    @classmethod
+    def _obtener_cache(cls, ticker: str) -> Optional[Dict[str, Any]]:
+        """
+        Obtiene datos del caché si son válidos
+        
+        Args:
+            ticker: Símbolo del ticker
+            
+        Returns:
+            Datos cacheados o None si expiró
+        """
+        if ticker in cls._request_cache:
+            datos, timestamp = cls._request_cache[ticker]
+            if time.time() - timestamp < cls._cache_ttl_seconds:
+                logging.getLogger("MarketDataManager").debug(
+                    f"✅ Cache válido para {ticker}"
+                )
+                return datos
+            else:
+                del cls._request_cache[ticker]
+        return None
+    
+    @classmethod
+    def _guardar_cache(cls, ticker: str, datos: Dict[str, Any]) -> None:
+        """
+        Guarda datos en caché con timestamp
+        
+        Args:
+            ticker: Símbolo del ticker
+            datos: Datos a cachear
+        """
+        cls._request_cache[ticker] = (datos, time.time())
     
     def obtener_datos_actuales(self, ticker: str) -> Dict[str, Any]:
         """
         Obtiene datos actuales: precio, volumen, cambios
-        Con manejo robusto de errores y reintentos
+        Con manejo robusto de errores, reintentos y caché para evitar rate limiting
         
         Args:
             ticker: Símbolo del instrumento (AAPL, MSFT, etc)
@@ -62,6 +129,15 @@ class MarketDataManager:
         Returns:
             Dict con: precio, máximo, mínimo, volumen, cambio%
         """
+        # NUEVO: Verificar caché primero
+        cache_data = self._obtener_cache(ticker)
+        if cache_data:
+            self.logger.info(f"📦 Usando datos en caché para {ticker}")
+            return cache_data
+        
+        # NUEVO: Aplicar rate limiting antes de llamar a YFinance
+        self._aplicar_rate_limit(ticker)
+        
         max_reintentos = 3  # Aumentado de 2 a 3
         for intento in range(max_reintentos):
             try:
@@ -143,6 +219,10 @@ class MarketDataManager:
                 }
                 
                 self.logger.info(f"✅ Datos actuales obtenidos para {ticker}: ${precio}")
+                
+                # NUEVO: Guardar en caché para futuras solicitudes
+                self._guardar_cache(ticker, resultado)
+                
                 return resultado
                 
             except Exception as e:
@@ -170,6 +250,9 @@ class MarketDataManager:
         Returns:
             DataFrame con columnas: Open, High, Low, Close, Volume, Adj Close
         """
+        # NUEVO: Aplicar rate limiting
+        self._aplicar_rate_limit(ticker)
+        
         try:
             stock = yf.Ticker(ticker)
             hist = stock.history(period=periodo, interval=intervalo)
@@ -195,6 +278,9 @@ class MarketDataManager:
         Returns:
             Dict con datos fundamentales
         """
+        # NUEVO: Aplicar rate limiting
+        self._aplicar_rate_limit(ticker)
+        
         try:
             stock = yf.Ticker(ticker)
             info = stock.info

@@ -1440,7 +1440,7 @@ El screener analiza múltiples símbolos financieros y genera recomendaciones po
             await update.message.reply_text(f"❌ Error en screener: {str(e)}")
     
     def iniciar(self):
-        """Inicia el bot"""
+        """Inicia el bot con manejo robusto de conflictos"""
         self.logger.info("[INFO] Iniciando bot de Telegram...")
         print("=" * 50)
         print("[BOT] BOT ANALISTA A&C")
@@ -1449,4 +1449,60 @@ El screener analiza múltiples símbolos financieros y genera recomendaciones po
         print("[OK] Bot en funcionamiento. Presiona Ctrl+C para detener.")
         print("=" * 50)
         
-        self.app.run_polling()
+        max_reintentos = 3
+        reintento = 0
+        
+        while reintento < max_reintentos:
+            try:
+                # NUEVO: Implementar error handler para conflictos
+                error_handler = logging.ERROR
+                
+                def manejar_error(update, context):
+                    """Maneja errores de actualización"""
+                    if "Conflict: terminated by other getUpdates request" in str(context.error):
+                        self.logger.warning(
+                            "⚠️  Conflicto detectado: otra instancia está usando este token"
+                        )
+                    elif "Too Many Requests" in str(context.error):
+                        self.logger.warning(
+                            "⚠️  Rate limit de Telegram: esperando 30 segundos..."
+                        )
+                        import time
+                        time.sleep(30)
+                    else:
+                        self.logger.error(f"Error en actualización: {context.error}")
+                
+                # Registrar error handler
+                self.app.add_error_handler(manejar_error)
+                
+                self.app.run_polling()
+                break  # Salir del loop si se ejecuta exitosamente
+                
+            except Exception as e:
+                reintento += 1
+                error_msg = str(e).lower()
+                
+                if "conflict" in error_msg and "getUpdates" in str(e):
+                    self.logger.error(
+                        f"❌ Error de conflicto ({reintento}/{max_reintentos}): "
+                        "Otra instancia está usando este token. "
+                        "Reiniciando en 5 segundos..."
+                    )
+                    import time
+                    time.sleep(5)
+                elif "too many requests" in error_msg:
+                    self.logger.error(
+                        f"❌ Rate limit de Telegram ({reintento}/{max_reintentos}). "
+                        "Esperando 60 segundos..."
+                    )
+                    import time
+                    time.sleep(60)
+                else:
+                    self.logger.error(f"❌ Error iniciando bot: {str(e)}")
+                    raise
+        
+        if reintento >= max_reintentos:
+            self.logger.error(
+                f"❌ No se pudo iniciar el bot después de {max_reintentos} intentos"
+            )
+            raise Exception("Fallo al iniciar el bot después de múltiples intentos")
